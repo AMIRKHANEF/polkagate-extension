@@ -21,6 +21,7 @@ export default function Bread (): React.ReactElement {
   const segments = useMemo(() => {
     switch (path) {
       case ('accountfs'):
+      case ('create-account-full-screen'):
       case ('import'):
       case ('derivefs'):
         return [t('Home')];

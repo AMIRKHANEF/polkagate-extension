@@ -10,6 +10,8 @@ import { Grid, keyframes, Typography, useTheme } from '@mui/material';
 import React, { useCallback, useContext, useEffect, useRef, useState } from 'react';
 
 import { Chain } from '@polkadot/extension-chains/types';
+import Bread from '@polkadot/extension-polkagate/src/fullscreen/partials/Bread';
+import { Title } from '@polkadot/extension-polkagate/src/fullscreen/sendFund/InputPage';
 import { FULLSCREEN_WIDTH } from '@polkadot/extension-polkagate/src/util/constants';
 import settings from '@polkadot/ui-settings';
 
@@ -143,27 +145,25 @@ export default function ImportLedger (): React.ReactElement {
       />
       <Grid container item justifyContent='center' sx={{ bgcolor: 'backgroundFL.secondary', height: 'calc(100vh - 70px)', maxWidth: FULLSCREEN_WIDTH, overflow: 'scroll' }}>
         <Grid container item sx={{ display: 'block', px: '10%' }}>
-          <Grid alignContent='center' alignItems='center' container item>
-            <Grid item sx={{ mr: '20px' }}>
-              <vaadin-icon icon='vaadin:wallet' style={{ height: '40px', color: `${theme.palette.text.primary}`, width: '40px' }} />
-            </Grid>
-            <Grid item>
-              <Typography fontSize='30px' fontWeight={700} py='20px' width='100%'>
-                {t<string>('Attach ledger device')}
-              </Typography>
-            </Grid>
-          </Grid>
+          <Bread />
+          <Title
+            height='85px'
+            logo={
+              <vaadin-icon icon='vaadin:wallet' style={{ color: `${theme.palette.text.primary}`, height: '40px', width: '40px' }} />
+            }
+            text={t('Attach ledger device')}
+          />
           <Typography fontSize='16px' fontWeight={400} pt='15px' textAlign='left' width='100%'>
-            <b>1</b>. {t<string>('Connect your ledger device to the computer.')}<br />
-            <b>2</b>. {t<string>('Open your desired App on the ledger device.')}<br />
-            <b>3</b>. {t<string>('Select the relevant chain of your desired App from below.')}<br />
+            <b>1</b>. {t('Connect your ledger device to the computer.')}<br />
+            <b>2</b>. {t('Open your desired App on the ledger device.')}<br />
+            <b>3</b>. {t('Select the relevant chain of your desired App from below.')}<br />
           </Typography>
           <Grid container item justifyContent='space-between' mb='25px' mt='10px'>
             <SelectChain
               address={address || 'dummy'} // dummy address just to make select enable
               defaultValue={newChain?.genesisHash || networkOps.current[0].text}
               icon={getLogo(newChain ?? undefined)}
-              label={t<string>('Select the chain')}
+              label={t('Select the chain')}
               onChange={setGenesis}
               options={networkOps.current}
               style={{ mt: 3, width: '100%' }}
@@ -202,7 +202,7 @@ export default function ImportLedger (): React.ReactElement {
                     <Select
                       defaultValue={accOps.current[0].value}
                       isDisabled={ledgerLoading}
-                      label={t<string>('Account type')}
+                      label={t('Account type')}
                       onChange={_onSetAccountIndex}
                       options={accOps.current}
                       value={accountIndex}
@@ -212,7 +212,7 @@ export default function ImportLedger (): React.ReactElement {
                     <Select
                       defaultValue={addOps.current[0].value}
                       isDisabled={ledgerLoading}
-                      label={t<string>('Address index')}
+                      label={t('Address index')}
                       onChange={_onSetAddressOffset}
                       options={addOps.current}
                       value={addressOffset}
@@ -244,8 +244,8 @@ export default function ImportLedger (): React.ReactElement {
                 mt='30px'
                 onPrimaryClick={ledgerLocked ? refresh : _onSave}
                 onSecondaryClick={onCancel}
-                primaryBtnText={ledgerLocked ? t<string>('Refresh') : t<string>('Import')}
-                secondaryBtnText={t<string>('Cancel')}
+                primaryBtnText={ledgerLocked ? t('Refresh') : t('Import')}
+                secondaryBtnText={t('Cancel')}
               />
             </Grid>
           </Grid>

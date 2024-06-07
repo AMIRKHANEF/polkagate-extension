@@ -13,6 +13,8 @@ import { Grid, Typography, useTheme } from '@mui/material';
 import React, { useCallback, useState } from 'react';
 
 import { openOrFocusTab } from '@polkadot/extension-polkagate/src/fullscreen/accountDetails/components/CommonTasks';
+import Bread from '@polkadot/extension-polkagate/src/fullscreen/partials/Bread';
+import { Title } from '@polkadot/extension-polkagate/src/fullscreen/sendFund/InputPage';
 import { FULLSCREEN_WIDTH } from '@polkadot/extension-polkagate/src/util/constants';
 import { u8aToString } from '@polkadot/util';
 
@@ -128,16 +130,14 @@ export default function RestoreJson (): React.ReactElement {
       />
       <Grid container item justifyContent='center' sx={{ bgcolor: 'backgroundFL.secondary', height: 'calc(100vh - 70px)', maxWidth: FULLSCREEN_WIDTH, overflow: 'scroll' }}>
         <Grid container item sx={{ display: 'block', px: '10%' }}>
-          <Grid alignContent='center' alignItems='center' container item>
-            <Grid item sx={{ mr: '20px' }}>
-              <vaadin-icon icon='vaadin:file-text' style={{ height: '40px', color: `${theme.palette.text.primary}`, width: '40px' }} />
-            </Grid>
-            <Grid item>
-              <Typography fontSize='30px' fontWeight={700} py='20px' width='100%'>
-                {t('Restore from file')}
-              </Typography>
-            </Grid>
-          </Grid>
+          <Bread />
+          <Title
+            height='105px'
+            logo={
+              <vaadin-icon icon='vaadin:file-text' style={{ color: `${theme.palette.text.primary}`, height: '40px', width: '40px' }} />
+            }
+            text={t('Restore from file')}
+          />
           {stepOne &&
             <Typography fontSize='16px' fontWeight={400} width='100%'>
               {t('Upload a JSON file containing the account(s) you previously exported from this extension or other compatible extensions/wallets.')}

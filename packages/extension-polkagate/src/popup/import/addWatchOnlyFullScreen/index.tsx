@@ -11,6 +11,8 @@ import React, { useCallback, useEffect, useMemo, useState } from 'react';
 import { AccountsStore } from '@polkadot/extension-base/stores';
 import { Chain } from '@polkadot/extension-chains/types';
 import { openOrFocusTab } from '@polkadot/extension-polkagate/src/fullscreen/accountDetails/components/CommonTasks';
+import Bread from '@polkadot/extension-polkagate/src/fullscreen/partials/Bread';
+import { Title } from '@polkadot/extension-polkagate/src/fullscreen/sendFund/InputPage';
 import { FULLSCREEN_WIDTH } from '@polkadot/extension-polkagate/src/util/constants';
 import keyring from '@polkadot/ui-keyring';
 import { cryptoWaitReady } from '@polkadot/util-crypto';
@@ -95,16 +97,14 @@ export default function AddWatchOnlyFullScreen (): React.ReactElement {
       />
       <Grid container item justifyContent='center' sx={{ bgcolor: 'backgroundFL.secondary', height: 'calc(100vh - 70px)', maxWidth: FULLSCREEN_WIDTH, overflow: 'scroll' }}>
         <Grid container item sx={{ display: 'block', px: '10%' }}>
-          <Grid alignContent='center' alignItems='center' container item>
-            <Grid item sx={{ mr: '20px' }}>
+          <Bread />
+          <Title
+            height='105px'
+            logo={
               <vaadin-icon icon='vaadin:tag' style={{ height: '40px', color: `${theme.palette.text.primary}`, width: '40px' }} />
-            </Grid>
-            <Grid item>
-              <Typography fontSize='30px' fontWeight={700} py='20px' width='100%'>
-                {t('Add Watch-Only Account')}
-              </Typography>
-            </Grid>
-          </Grid>
+            }
+            text={t('Add Watch-Only Account')}
+          />
           <Typography fontSize='16px' fontWeight={400} width='100%'>
             {t('Enter the watch-only address. It can also serve as a proxied account, but without transaction signing. A proxy account in the extension is needed for signing.')}
           </Typography>

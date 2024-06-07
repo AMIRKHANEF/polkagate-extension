@@ -11,6 +11,8 @@ import { Collapse, Grid, IconButton, Typography, useTheme } from '@mui/material'
 import React, { useCallback, useContext, useEffect, useMemo, useState } from 'react';
 
 import { Chain } from '@polkadot/extension-chains/types';
+import Bread from '@polkadot/extension-polkagate/src/fullscreen/partials/Bread';
+import { Title } from '@polkadot/extension-polkagate/src/fullscreen/sendFund/InputPage';
 import { FULLSCREEN_WIDTH } from '@polkadot/extension-polkagate/src/util/constants';
 import { objectSpread } from '@polkadot/util';
 
@@ -87,8 +89,8 @@ export default function ImportSeed (): React.ReactElement {
         setAddress('');
         setAccount(null);
         setError(path
-          ? t<string>('Invalid recovery phrase or derivation path')
-          : t<string>('Invalid recovery phrase')
+          ? t('Invalid recovery phrase or derivation path')
+          : t('Invalid recovery phrase')
         );
       });
   }, [t, genesis, seed, path, setAccount, type]);
@@ -142,18 +144,16 @@ export default function ImportSeed (): React.ReactElement {
       />
       <Grid container item justifyContent='center' sx={{ bgcolor: 'backgroundFL.secondary', height: 'calc(100vh - 70px)', maxWidth: FULLSCREEN_WIDTH, overflow: 'scroll' }}>
         <Grid container item sx={{ display: 'block', position: 'relative', px: '10%' }}>
-          <Grid alignContent='center' alignItems='center' container item>
-            <Grid item sx={{ mr: '20px' }}>
-              <vaadin-icon icon='vaadin:book' style={{ height: '40px', color: `${theme.palette.text.primary}`, width: '40px' }} />
-            </Grid>
-            <Grid item>
-              <Typography fontSize='30px' fontWeight={700} py='20px' width='100%'>
-                {t<string>('Import from recovery phrase')}
-              </Typography>
-            </Grid>
-          </Grid>
+          <Bread />
+          <Title
+            height='105px'
+            logo={
+              <vaadin-icon icon='vaadin:book' style={{ color: `${theme.palette.text.primary}`, height: '40px', width: '40px' }} />
+            }
+            text={t('Import from recovery phrase')}
+          />
           <Typography fontSize='16px' fontWeight={400} width='100%'>
-            {t<string>('Enter your account\'s recovery phrase (mnemonic seed) to seamlessly import it into the extension wallet, giving you quick and secure access to your assets and transactions.')}
+            {t('Enter your account\'s recovery phrase (mnemonic seed) to seamlessly import it into the extension wallet, giving you quick and secure access to your assets and transactions.')}
           </Typography>
           <Grid container item sx={{ '> div textarea': { height: '55px' }, mt: '20px', position: 'relative' }}>
             <TextAreaWithLabel
@@ -161,7 +161,7 @@ export default function ImportSeed (): React.ReactElement {
               height='70px'
               isError={!!error}
               isFocused
-              label={t<string>('Existing 12 or 24-word recovery phrase')}
+              label={t('Existing 12 or 24-word recovery phrase')}
               onChange={setSeed}
               rowsCount={2}
               style={{ width: '100%' }}
@@ -203,14 +203,14 @@ export default function ImportSeed (): React.ReactElement {
           <Grid container sx={{ mt: '15px' }}>
             <InputWithLabel
               isError={name === null || name?.length === 0}
-              label={t<string>('Choose a name for this account')}
+              label={t('Choose a name for this account')}
               onChange={onNameChange}
               value={name ?? ''}
             />
           </Grid>
           <Passwords2
             firstPassStyle={{ marginBlock: '10px' }}
-            label={t<string>('Password for this account (more than 5 characters)')}
+            label={t('Password for this account (more than 5 characters)')}
             onChange={onPassChange}
             // eslint-disable-next-line react/jsx-no-bind
             onEnter={password && name && !error && !!seed ? onCreate : () => null}
@@ -226,7 +226,7 @@ export default function ImportSeed (): React.ReactElement {
               <Grid container item width='49%'>
                 <InputWithLabel
                   isError={!!path && !!error}
-                  label={t<string>('Derived path (ignore if the account is not derived)')}
+                  label={t('Derived path (ignore if the account is not derived)')}
                   onChange={setPath}
                   value={path || ''}
                 />
@@ -235,7 +235,7 @@ export default function ImportSeed (): React.ReactElement {
                 address={address}
                 defaultValue={newChain?.genesisHash || genesisOptions[0].text}
                 icon={getLogo(newChain ?? undefined)}
-                label={t<string>('Select the chain')}
+                label={t('Select the chain')}
                 onChange={onChangeNetwork}
                 options={genesisOptions}
                 style={{ p: 0, width: '49%' }}
@@ -250,8 +250,8 @@ export default function ImportSeed (): React.ReactElement {
                 mt='1px'
                 onPrimaryClick={onCreate}
                 onSecondaryClick={onCancel}
-                primaryBtnText={t<string>('Import')}
-                secondaryBtnText={t<string>('Cancel')}
+                primaryBtnText={t('Import')}
+                secondaryBtnText={t('Cancel')}
               />
             </Grid>
           </Grid>

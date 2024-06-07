@@ -8,6 +8,8 @@ import '@vaadin/icons';
 import { Button, Grid, Typography, useTheme } from '@mui/material';
 import React, { useCallback, useContext, useEffect, useState } from 'react';
 
+import Bread from '@polkadot/extension-polkagate/src/fullscreen/partials/Bread';
+import { Title } from '@polkadot/extension-polkagate/src/fullscreen/sendFund/InputPage';
 import { FULLSCREEN_WIDTH } from '@polkadot/extension-polkagate/src/util/constants';
 import { QrScanAddress } from '@polkadot/react-qr';
 
@@ -107,7 +109,7 @@ export default function AttachQrFullScreen (): React.ReactElement {
         }}
         variant='contained'
       >
-        {t<string>('Okay')}
+        {t('Okay')}
       </Button>
     </Grid>
   );
@@ -120,16 +122,14 @@ export default function AttachQrFullScreen (): React.ReactElement {
       />
       <Grid container item justifyContent='center' sx={{ bgcolor: 'backgroundFL.secondary', height: 'calc(100vh - 70px)', maxWidth: FULLSCREEN_WIDTH, overflow: 'scroll' }}>
         <Grid container item sx={{ display: 'block', px: '10%' }}>
-          <Grid alignContent='center' alignItems='center' container item>
-            <Grid item sx={{ mr: '20px' }}>
+          <Bread />
+          <Title
+            height='85px'
+            logo={
               <vaadin-icon icon='vaadin:qrcode' style={{ height: '40px', color: `${theme.palette.text.primary}`, width: '40px' }} />
-            </Grid>
-            <Grid item>
-              <Typography fontSize='30px' fontWeight={700} py='20px' width='100%'>
-                {t('Attach QR-signer')}
-              </Typography>
-            </Grid>
-          </Grid>
+            }
+            text={t('Attach QR-signer')}
+          />
           {!account &&
             <Grid alignItems='center' container justifyContent='center'>
               <Typography fontSize='16px' m='auto' pt='40px' textAlign='center' width='92%'>
