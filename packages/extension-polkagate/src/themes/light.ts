@@ -1,6 +1,8 @@
 // Copyright 2019-2024 @polkadot/extension-polkagate authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
+/* eslint-disable sort-keys */
+
 import type { ThemeOptions, TypeText } from '@mui/material';
 
 import { baseTheme } from './baseTheme';
@@ -12,7 +14,8 @@ declare module '@mui/material/styles' {
     label: Palette['primary'];
     approval: Palette['primary'];
     support: Palette['primary'];
-    backgroundFL?: Palette['primary'];
+    backgroundFL: Palette['primary'];
+    switchBgColor: Partial<TypeText>;
   }
   interface PaletteOptions {
     approval?: PaletteOptions['primary'];
@@ -21,6 +24,7 @@ declare module '@mui/material/styles' {
     label?: PaletteOptions['primary'];
     support?: PaletteOptions['primary'];
     backgroundFL?: Partial<TypeText>;
+    switchBgColor?: Partial<TypeText>;
   }
 }
 
@@ -41,7 +45,8 @@ export const lightTheme: ThemeOptions = {
     action: { disabled: '#fff', disabledBackground: '#989898', focus: '#BA82A5' },
     success: { main: '#1F7720' },
     warning: { main: '#FF002B' },
-    divider: 'rgba(0, 0, 0, 0.1)'
+    divider: 'rgba(0, 0, 0, 0.1)',
+    switchBgColor: { secondary: '#46890C', disabled: '#838383', primary: 'rgb(255 239 18)' }
   },
   components: {
     MuiSkeleton: {
