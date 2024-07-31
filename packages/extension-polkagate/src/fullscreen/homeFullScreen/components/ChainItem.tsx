@@ -1,8 +1,8 @@
 // Copyright 2019-2024 @polkadot/extension-polkagate authors & contributors
 // SPDX-License-Identifier: Apache-2.0
-// @ts-nocheck
 
 /* eslint-disable react/jsx-max-props-per-line */
+
 import type { DropdownOption } from '../../../util/types';
 
 import { Avatar, Grid, Typography, useTheme } from '@mui/material';
@@ -20,7 +20,7 @@ interface Props {
   disabled: boolean | undefined;
 }
 
-function ChainItem({ chain, disabled, isSelected, onclick }: Props): React.ReactElement {
+function ChainItem ({ chain, disabled, isSelected, onclick }: Props): React.ReactElement {
   const theme = useTheme();
   const selectedItem = useMemo(() => false, []);
 
@@ -29,7 +29,7 @@ function ChainItem({ chain, disabled, isSelected, onclick }: Props): React.React
       <Grid alignItems='center' container item mr='10px' width='fit-content'>
         <Avatar
           src={getLogo2(chain.text)?.logo}
-          sx={{ borderRadius: '50%', filter: (CHAINS_WITH_BLACK_LOGO.includes(sanitizeChainName(chain.text) || '') && theme.palette.mode === 'dark') ? 'invert(1)' : '', height: 25, width: 25, mr: '10px' }}
+          sx={{ borderRadius: '50%', filter: (CHAINS_WITH_BLACK_LOGO.includes(sanitizeChainName(chain.text) || '') && theme.palette.mode === 'dark') ? 'invert(1)' : '', height: 25, mr: '10px', width: 25 }}
           variant='square'
         />
         <Typography fontSize='16px' fontWeight={selectedItem ? 500 : 400}>
@@ -38,7 +38,7 @@ function ChainItem({ chain, disabled, isSelected, onclick }: Props): React.React
       </Grid>
       <Grid alignItems='center' container item width='fit-content'>
         <Switch
-          changeBackground={!disabled}
+          changeBackground={!disabled ? theme.palette.switchBgColor.primary : undefined}
           fontSize='17px'
           isChecked={isSelected && !disabled}
           // eslint-disable-next-line react/jsx-no-bind

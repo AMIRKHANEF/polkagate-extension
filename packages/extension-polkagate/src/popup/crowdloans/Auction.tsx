@@ -1,29 +1,28 @@
-// Copyright 2019-2022 @polkadot/extension-polkagate authors & contributors
+// Copyright 2019-2024 @polkadot/extension-polkagate authors & contributors
 // SPDX-License-Identifier: Apache-2.0
-// @ts-nocheck
-/* eslint-disable header/header */
+
 /* eslint-disable react/jsx-max-props-per-line */
 /* eslint-disable react/jsx-first-prop-new-line */
 
-/** 
+/**
  * @description
- *  this component renders auction tab which show an ongoing auction information along with a possible parachain bids/winning 
- * 
+ *  this component renders auction tab which show an ongoing auction information along with a possible parachain bids/winning
+ *
  * auction start                                                                                                      Auction ends
- * 
+ *
  *  |--------27000 blocks (grace period ~ 2days)---------||===========72000 blocks (candle Phase ~ 5days)============|||
  * */
 
+import type { ApiPromise } from '@polkadot/api';
+import type { Auction } from '../../util/types';
+
 import { Grid, LinearProgress, Typography, useTheme } from '@mui/material';
 import React, { useCallback, useMemo, useState } from 'react';
-
-import { ApiPromise } from '@polkadot/api';
 
 import { Infotip, Switch, Warning } from '../../components';
 import { useTranslation } from '../../hooks';
 import BouncingSubTitle from '../../partials/BouncingSubTitle';
 import { AUCTION_GRACE_PERIOD } from '../../util/constants';
-import type { Auction } from '../../util/types';
 import { remainingTime } from '../../util/utils';
 import blockToDate from './partials/blockToDate';
 
@@ -33,7 +32,7 @@ interface Props {
   currentBlockNumber?: number;
 }
 
-export default function AuctionTab({ api, auction, currentBlockNumber }: Props): React.ReactElement<Props> {
+export default function AuctionTab ({ api, auction, currentBlockNumber }: Props): React.ReactElement<Props> {
   const { t } = useTranslation();
   const theme = useTheme();
 
@@ -63,15 +62,15 @@ export default function AuctionTab({ api, auction, currentBlockNumber }: Props):
     <Grid container direction='column' item sx={{ bgcolor: 'background.paper', border: '1px solid', borderColor: 'secondary.light', borderRadius: '5px', mt: '-2px' }}>
       <Grid container item justifyContent='space-between' px='10px'>
         <Typography fontSize='16px' fontWeight={300} lineHeight='34px' width='fit-content'>
-          {t<string>('Lease')}
+          {t('Lease')}
         </Typography>
         <Typography fontSize='16px' fontWeight={400} lineHeight='34px' width='fit-content'>
-          {firstLease} {' - '}{lastLease && firstLease + lastLease} {t<string>('Slot')}
+          {firstLease} {' - '}{lastLease && firstLease + lastLease} {t('Slot')}
         </Typography>
       </Grid>
       <Grid container item justifyContent='space-between' px='10px' sx={{ borderBlock: '1px solid', borderColor: 'secondary.light' }}>
         <Typography fontSize='16px' fontWeight={300} lineHeight='34px' width='fit-content'>
-          {viewType === 'Block' ? t<string>('Current block') : t<string>('Current time')}
+          {viewType === 'Block' ? t('Current block') : t('Current time')}
         </Typography>
         <Typography fontSize='16px' fontWeight={400} lineHeight='34px' width='fit-content'>
           {viewType === 'Block' ? String(currentBlockNumber) : currentTime && currentTime}
@@ -79,7 +78,7 @@ export default function AuctionTab({ api, auction, currentBlockNumber }: Props):
       </Grid>
       <Grid container item justifyContent='space-between' px='10px'>
         <Typography fontSize='16px' fontWeight={300} lineHeight='34px' width='fit-content'>
-          {t<string>('Auction stage')}
+          {t('Auction stage')}
         </Typography>
         <Typography fontSize='16px' fontWeight={400} lineHeight='34px' width='fit-content'>
           {viewType === 'Block' && `${auctionStartBlock} - ${candlePhaseStartBlock}`}
@@ -88,7 +87,7 @@ export default function AuctionTab({ api, auction, currentBlockNumber }: Props):
       </Grid>
       <Grid container item justifyContent='space-between' px='10px' sx={{ borderBlock: '1px solid', borderColor: 'secondary.light' }}>
         <Typography fontSize='16px' fontWeight={300} lineHeight='34px' width='fit-content'>
-          {t<string>('Ending stage')}
+          {t('Ending stage')}
         </Typography>
         <Typography fontSize='16px' fontWeight={400} lineHeight='34px' width='fit-content'>
           {viewType === 'Block' && `${candlePhaseStartBlock} - ${endingPeriod && candlePhaseStartBlock + endingPeriod}`}
@@ -97,7 +96,7 @@ export default function AuctionTab({ api, auction, currentBlockNumber }: Props):
       </Grid>
       <Grid container item justifyContent='space-between' mt='20px' px='10px'>
         <Typography fontSize='16px' fontWeight={300} lineHeight='34px' width='fit-content'>
-          {viewType === 'Block' ? t<string>('Remaining block') : t<string>('Remaining time')}
+          {viewType === 'Block' ? t('Remaining block') : t('Remaining time')}
         </Typography>
       </Grid>
       <Grid container item m='auto' pb='40px' width='95%'>
@@ -109,7 +108,7 @@ export default function AuctionTab({ api, auction, currentBlockNumber }: Props):
                   ? t('Done')
                   : viewType === 'Date'
                     ? remainingTime(candlePhaseStartBlock - currentBlockNumber) + 'left'
-                    : t<string>('{{blocks}} blocks left', { replace: { blocks: candlePhaseStartBlock - currentBlockNumber } })}
+                    : t('{{blocks}} blocks left', { replace: { blocks: candlePhaseStartBlock - currentBlockNumber } })}
               >
                 <div style={{
                   border: '2px solid',
@@ -195,27 +194,27 @@ export default function AuctionTab({ api, auction, currentBlockNumber }: Props):
 
   return (
     <>
-      <BouncingSubTitle label={t<string>(`Auction #${auction.auctionCounter}`)} />
+      <BouncingSubTitle label={t(`Auction #${auction.auctionCounter}`)} />
       {auction && !auction.auctionInfo &&
         <Grid container height='15px' item justifyContent='center' mt='30px'>
           <Warning
             fontWeight={400}
             theme={theme}
           >
-            {t<string>('No available auction.')}
+            {t('No available auction.')}
           </Warning>
         </Grid>
       }
-      {auction && auction.auctionInfo &&
+      {auction?.auctionInfo &&
         <Grid container item m='auto' width='92%'>
           <Grid container item justifyContent='flex-end' mt='15px'>
             <Switch
-              checkedLabel={t<string>('Block')}
+              checkedLabel={t('Block')}
               fontSize='15px'
               isChecked={viewType !== 'Date'}
               onChange={onChangeView}
               theme={theme}
-              uncheckedLabel={t<string>('Date')}
+              uncheckedLabel={t('Date')}
             />
           </Grid>
           <ShowAuction />

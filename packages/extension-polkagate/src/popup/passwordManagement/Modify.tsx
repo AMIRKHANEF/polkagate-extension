@@ -1,6 +1,5 @@
 // Copyright 2019-2024 @polkadot/extension-polkagate authors & contributors
 // SPDX-License-Identifier: Apache-2.0
-// @ts-nocheck
 
 /* eslint-disable react/jsx-max-props-per-line */
 
@@ -25,7 +24,7 @@ interface Props {
   newPassword: string;
 }
 
-function Modify({ isPasswordError, newPassword, onBackClick, onPassChange, setIsPasswordError, setStep }: Props): React.ReactElement {
+function Modify ({ isPasswordError, newPassword, onBackClick, onPassChange, setIsPasswordError, setStep }: Props): React.ReactElement {
   const { t } = useTranslation();
   const theme = useTheme();
   const isExtensionMode = useIsExtensionPopup();
@@ -80,10 +79,10 @@ function Modify({ isPasswordError, newPassword, onBackClick, onPassChange, setIs
       {!isPasswordError &&
         <Grid alignContent='center' container justifyContent='center' sx={{ height: '200px', px: '20px', textAlign: 'center' }}>
           <Typography sx={{ fontSize: '14px', fontWeight: 500, pb: '5px' }}>
-            {t<string>('You are about to modify your password. ')}
+            {t('You are about to modify your password. ')}
           </Typography>
           <Typography sx={{ fontSize: '14px' }}>
-            {t<string>('You can set a new password or even remove your password.')}<br />
+            {t('You can set a new password or even remove your password.')}<br />
           </Typography>
         </Grid>
       }
@@ -95,23 +94,23 @@ function Modify({ isPasswordError, newPassword, onBackClick, onPassChange, setIs
         />
         <Grid alignItems='center' container item justifyContent='space-between'>
           <Typography sx={{ fontSize: '14px' }}>
-            {t<string>('Password Enabled')}<br />
+            {t('Password Enabled')}<br />
           </Typography>
           <Switch
-            changeBackground
+            changeBackground={theme.palette.switchBgColor.primary}
             fontSize='17px'
             isChecked={!isRemovePasswordChecked}
             onChange={onCheckChange}
             theme={theme}
-          // uncheckedLabel={t<string>('Light')}
           />
         </Grid>
         <Grid item sx={{ mt: '20px', opacity: isRemovePasswordChecked ? 0.5 : 1 }}>
           <Passwords2
             disabled={isRemovePasswordChecked}
             firstPassStyle={{ marginBlock: '8px' }}
-            label={t<string>('New password')}
+            label={t('New password')}
             onChange={onPassChange}
+            // eslint-disable-next-line @typescript-eslint/no-misused-promises
             onEnter={onUpdatePassword}
           />
         </Grid>
@@ -122,8 +121,8 @@ function Modify({ isPasswordError, newPassword, onBackClick, onPassChange, setIs
             mt='20px'
             onPrimaryClick={onSet}
             onSecondaryClick={onBackClick}
-            primaryBtnText={t<string>('Set')}
-            secondaryBtnText={t<string>('Cancel')}
+            primaryBtnText={t('Set')}
+            secondaryBtnText={t('Cancel')}
             width='100%'
           />
         </Grid>

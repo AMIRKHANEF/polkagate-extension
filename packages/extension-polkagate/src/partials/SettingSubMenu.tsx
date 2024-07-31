@@ -26,7 +26,7 @@ interface Props {
   onChange: () => void;
 }
 
-export default function SettingSubMenu({ isTestnetEnabledChecked, onChange, setTestnetEnabledChecked, show }: Props): React.ReactElement {
+export default function SettingSubMenu ({ isTestnetEnabledChecked, onChange, setTestnetEnabledChecked, show }: Props): React.ReactElement {
   const { t } = useTranslation();
   const theme = useTheme();
   const isPopup = useIsPopup();
@@ -167,7 +167,7 @@ export default function SettingSubMenu({ isTestnetEnabledChecked, onChange, setT
             <MenuItem
               fontSize='17px'
               iconComponent={
-                <VaadinIcon icon='vaadin:key' style={{ color: `${theme.palette.text.primary}`, height: '18px'}} />
+                <VaadinIcon icon='vaadin:key' style={{ color: `${theme.palette.text.primary}`, height: '18px' }} />
               }
               onClick={onManageLoginPassword}
               py='2px'
