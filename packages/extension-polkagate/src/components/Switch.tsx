@@ -1,9 +1,11 @@
 // Copyright 2019-2024 @polkadot/extension-polkagate authors & contributors
 // SPDX-License-Identifier: Apache-2.0
-// @ts-nocheck
+
+/* eslint-disable react/jsx-max-props-per-line */
+
+import type { Theme } from '@mui/material/styles';
 
 import { Grid, Typography } from '@mui/material';
-import { Theme } from '@mui/material/styles';
 import React from 'react';
 import styled from 'styled-components';
 
@@ -16,10 +18,10 @@ interface Props {
   fontSize?: string;
   fontWeight?: number;
   isChecked?: boolean;
-  changeBackground?: boolean;
+  changeBackground?: string;
 }
 
-function Switch({ changeBackground = false, checkedLabel, className, fontSize = '18px', fontWeight = 300, isChecked = false, onChange, theme, uncheckedLabel }: Props): React.ReactElement<Props> {
+function Switch ({ changeBackground = '', checkedLabel, className, fontSize = '18px', fontWeight = 300, isChecked = false, onChange, uncheckedLabel }: Props): React.ReactElement<Props> {
   return (
     <Grid alignItems='center' className={className} container item width='fit-content'>
       <Typography display='inline' fontSize={fontSize} fontWeight={fontWeight}>
@@ -34,7 +36,8 @@ function Switch({ changeBackground = false, checkedLabel, className, fontSize = 
         />
         <span
           className='slider'
-          style={{ backgroundColor: isChecked && changeBackground ? 'rgb(255 239 18) ' : 'transparent' }} />
+          style={{ backgroundColor: isChecked && changeBackground ? changeBackground : 'transparent' }}
+        />
       </label>
       <Typography
         display='inline'
