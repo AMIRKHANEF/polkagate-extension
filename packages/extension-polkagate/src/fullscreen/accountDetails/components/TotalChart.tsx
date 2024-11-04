@@ -25,7 +25,7 @@ interface Props {
   pricesInCurrency: Prices | null | undefined
 }
 
-interface AssetsToShow extends FetchedBalance {
+export interface AssetsToShow extends FetchedBalance {
   worth: number;
   percentage: number;
   color: string

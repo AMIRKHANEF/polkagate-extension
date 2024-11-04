@@ -65,31 +65,32 @@ const AccountButton = ({ icon, onClick, text }: AccountButtonType) => {
   );
 };
 
-const AccountTotal = ({ hideNumbers, totalBalance }: { hideNumbers: boolean | undefined, totalBalance: number | undefined }) => {
+export const AccountTotal = React.memo(function AccountTotal ({ hideNumbers, isExtensionMode, totalBalance }: { hideNumbers: boolean | undefined, totalBalance: number | undefined, isExtensionMode?: boolean }) {
   const theme = useTheme();
   const { t } = useTranslation();
 
   return (
-    <Grid alignItems='center' container item xs>
-      <Grid alignItems='center' container gap='15px' item justifyContent='center' width='fit-content'>
-        <Typography fontSize='16px' fontWeight={400} pl='15px'>
-          {t('Total')}:
-        </Typography>
-        {
-          hideNumbers || hideNumbers === undefined
-            ? <Box component='img' src={(theme.palette.mode === 'dark' ? stars6White : stars6Black) as string} sx={{ height: '36px', width: '154px' }} />
-            : <FormatPrice
-              fontSize='32px'
-              fontWeight={700}
-              num={totalBalance}
-              skeletonHeight={28}
-              width='180px'
-            />
+    <Grid alignItems='center' container item width={isExtensionMode ? 'fit-content' : '100%'} xs={!isExtensionMode}>
+      <Grid alignItems='center' container gap={isExtensionMode ? '6px' : '15px'} item justifyContent='center' width='fit-content'>
+        {!isExtensionMode &&
+          <Typography fontSize={isExtensionMode ? '14px' : '16px'} fontWeight={isExtensionMode ? 300 : 400} pl={isExtensionMode ? 0 : '15px'}>
+            {t('Total')}:
+          </Typography>}
+        {hideNumbers || hideNumbers === undefined
+          ? <Box component='img' src={(theme.palette.mode === 'dark' ? stars6White : stars6Black) as string} sx={{ height: '36px', width: '154px' }} />
+          : <FormatPrice
+            fontSize={isExtensionMode ? '18px' : '32px'}
+            fontWeight={isExtensionMode ? 400 : 700}
+            lineHeight='unset'
+            num={totalBalance}
+            skeletonHeight={isExtensionMode ? 20 : 28}
+            width={isExtensionMode ? '90px' : '180px'}
+          />
         }
       </Grid>
     </Grid>
   );
-};
+});
 
 function AccountInformationForHome ({ accountAssets, address, hideNumbers, isChild, selectedAsset, setSelectedAsset }: AddressDetailsProps): React.ReactElement {
   const { t } = useTranslation();
