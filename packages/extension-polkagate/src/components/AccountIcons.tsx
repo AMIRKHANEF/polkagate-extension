@@ -46,14 +46,14 @@ function AccountIcons ({ address, identiconTheme, isSubId, judgements, prefix }:
   }, [address]);
 
   return (
-    <Grid container direction='column' sx={{ ml: '8px', width: '17%' }}>
+    <Grid container direction='column' sx={{ ml: '8px', rowGap: '8px', width: '17%' }}>
       <Grid item m='auto' width='fit-content'>
         <Identicon
           iconTheme={identiconTheme}
           isSubId={isSubId}
           judgement={judgements}
           prefix={prefix}
-          size={40}
+          size={30}
           value={formatted || address}
         />
       </Grid>

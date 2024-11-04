@@ -16,7 +16,7 @@ interface Props {
   decimals?: number;
   fontSize?: string;
   fontWeight?: number;
-  lineHeight?: number;
+  lineHeight?: number | string;
   mt?: string;
   num?: number | string;
   price?: number | null,
