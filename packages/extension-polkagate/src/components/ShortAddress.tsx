@@ -23,7 +23,7 @@ interface Props {
   clipped?: boolean;
 }
 
-function ShortAddress ({ address, charsCount = SHORT_ADDRESS_CHARACTERS, clipped = false, inParentheses = false, showCopy = false, style }: Props): React.ReactElement {
+function ShortAddress({ address, charsCount = SHORT_ADDRESS_CHARACTERS, clipped = false, inParentheses = false, showCopy = false, style }: Props): React.ReactElement {
   const [charactersCount, setCharactersCount] = useState<number>(1);
   const pRef = useRef(null);
   const cRef = useRef(null);

@@ -20,7 +20,7 @@ interface Props {
   size?: number;
 }
 
-function ChainLogo ({ chainName, genesisHash, logo, size = 25 }: Props): React.ReactElement<Props> {
+function ChainLogo({ chainName, genesisHash, logo, size = 25 }: Props): React.ReactElement<Props> {
   const theme = useTheme();
   const maybeUserAddedChainColor = useUserAddedChainColor(genesisHash);
   const options = useContext(GenesisHashOptionsContext);

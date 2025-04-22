@@ -1,4 +1,4 @@
-// Copyright 2019-2024 @polkadot/extension authors & contributors
+// Copyright 2019-2025 @polkadot/extension authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
 const path = require('path');
@@ -12,6 +12,7 @@ const pkgJson = require('./package.json');
 const manifest = require('./manifest.json');
 
 const Dotenv = require('dotenv-webpack');
+
 const envPath = path.resolve(__dirname, '../../', '.env');
 
 const EXT_NAME = manifest.short_name;

@@ -2,19 +2,21 @@
 // SPDX-License-Identifier: Apache-2.0
 
 // @ts-nocheck
+import { BN_ZERO } from '@polkadot/util';
 
 export function balancify (balances) {
   const base = {
     availableBalance: String(balances.availableBalance),
     freeBalance: String(balances.freeBalance),
-    frozenBalance: String(balances.frozen),
+    frozenBalance: String(balances.frozen ?? balances.frozenBalance),
     lockedBalance: String(balances.lockedBalance),
     reservedBalance: String(balances.reservedBalance),
     vestedBalance: String(balances.vestedBalance),
     vestedClaimable: String(balances.vestedClaimable),
     vestingLocked: String(balances.vestingLocked),
     vestingTotal: String(balances.vestingTotal),
-    votingBalance: String(balances.votingBalance)
+    // votingBalance: String(balances.votingBalance)
+    votingBalance: String(balances.freeBalance.add(balances?.reservedBalance || BN_ZERO)) // after pool migration the voting balance returned fro api is not correct
   };
 
   if (balances.soloTotal) {

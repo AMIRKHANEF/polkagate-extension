@@ -20,7 +20,7 @@ interface Props {
   setHashedPassword: React.Dispatch<React.SetStateAction<string | undefined>>
 }
 
-function FirstTimeSetPassword ({ hashedPassword, onPassChange, setHashedPassword, setStep }: Props): React.ReactElement {
+function FirstTimeSetPassword({ hashedPassword, onPassChange, setHashedPassword, setStep }: Props): React.ReactElement {
   const { t } = useTranslation();
   const { setExtensionLock } = useExtensionLockContext();
 

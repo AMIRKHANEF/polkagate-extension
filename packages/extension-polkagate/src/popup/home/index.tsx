@@ -26,7 +26,7 @@ import ProfileTabs from './ProfileTabs';
 import WhatsNew from './WhatsNew';
 import YouHave from './YouHave';
 
-export default function Home (): React.ReactElement {
+export default function Home(): React.ReactElement {
   const { t } = useTranslation();
   const theme = useTheme();
   const manifest = useManifest();

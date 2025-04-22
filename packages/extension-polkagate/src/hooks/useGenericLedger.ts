@@ -65,7 +65,7 @@ export function useGenericLedger (accountIndex = 0, addressOffset = 0, chainSlip
     }
 
     return null;
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [refreshLock, chainSlip, txMetadataChainId]);
 
   useEffect(() => {

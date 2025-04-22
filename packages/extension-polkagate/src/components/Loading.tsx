@@ -118,7 +118,7 @@ const FlyingLogo = ({ theme }: { theme: Theme }) => (
   </Grid>
 );
 
-export default function Loading ({ children }: Props): React.ReactElement<Props> {
+export default function Loading({ children }: Props): React.ReactElement<Props> {
   const theme = useTheme();
 
   const { isExtensionLocked, setExtensionLock } = useExtensionLockContext();

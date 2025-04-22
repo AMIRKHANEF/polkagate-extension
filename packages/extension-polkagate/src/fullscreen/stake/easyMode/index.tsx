@@ -44,7 +44,7 @@ export default function EasyMode ({ address, balances, inputs, setInputs, setSte
   const [alert, setAlert] = useState<string | undefined>();
   const [estimatedMaxFee, setEstimatedMaxFee] = useState<Balance | undefined>();
 
-  const availableBalance = useMemo(() => balances?.availableBalance, [balances?.availableBalance]);
+  const freeBalance = useMemo(() => balances?.freeBalance, [balances?.freeBalance]);
 
   const buttonDisable = useMemo(() => {
     return !amount || !amountAsBN || !topStakingLimit || parseFloat(amount) === 0 || amountAsBN.gt(topStakingLimit);
@@ -65,7 +65,7 @@ export default function EasyMode ({ address, balances, inputs, setInputs, setSte
   }, [amount, amountAsBN, topStakingLimit, t]);
 
   useEffect(() => {
-    if (!api || !availableBalance || !formatted) {
+    if (!api || !freeBalance || !formatted) {
       return;
     }
 
@@ -73,10 +73,11 @@ export default function EasyMode ({ address, balances, inputs, setInputs, setSte
       return setEstimatedMaxFee(api.createType('Balance', BN_ONE) as Balance);
     }
 
-    amountAsBN && api.tx['nominationPools']['bondExtra']({ FreeBalance: availableBalance.toString() }).paymentInfo(formatted).then((i) => {
+    // FixMe: why bondExtra and not join?
+    amountAsBN && api.tx['nominationPools']['bondExtra']({ FreeBalance: freeBalance.toString() }).paymentInfo(formatted).then((i) => {
       setEstimatedMaxFee(api.createType('Balance', i?.partialFee) as Balance);
     }).catch(console.error);
-  }, [formatted, api, availableBalance, amount, decimal, amountAsBN]);
+  }, [formatted, api, freeBalance, amount, decimal, amountAsBN]);
 
   useEffect(() => {
     if (amount && amountAsBN && poolConsts && pool && api && amountAsBN.gte(poolConsts.minJoinBond)) {
@@ -117,12 +118,12 @@ export default function EasyMode ({ address, balances, inputs, setInputs, setSte
   }, [balances, setInputs]);
 
   const thresholds = useMemo(() => {
-    if (!stakingConsts || !decimal || !estimatedMaxFee || !availableBalance || !poolConsts) {
+    if (!stakingConsts || !decimal || !estimatedMaxFee || !freeBalance || !poolConsts) {
       return;
     }
 
     const ED = stakingConsts.existentialDeposit;
-    let max = availableBalance.sub(ED.muln(2)).sub(estimatedMaxFee);
+    let max = freeBalance.sub(ED.muln(2)).sub(estimatedMaxFee);
 
     let min = poolConsts.minJoinBond;
 
@@ -133,7 +134,7 @@ export default function EasyMode ({ address, balances, inputs, setInputs, setSte
     setTopStakingLimit(max);
 
     return { max, min };
-  }, [availableBalance, decimal, estimatedMaxFee, poolConsts, stakingConsts]);
+  }, [freeBalance, decimal, estimatedMaxFee, poolConsts, stakingConsts]);
 
   const onThresholdAmount = useCallback((maxMin: 'max' | 'min') => {
     if (!thresholds || !decimal) {

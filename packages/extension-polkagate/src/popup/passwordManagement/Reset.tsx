@@ -12,7 +12,7 @@ import { windowOpen } from '../../messaging';
 import HeaderBrand from '../../partials/HeaderBrand';
 import { EXTENSION_NAME } from '../../util/constants';
 
-function Reset (): React.ReactElement {
+function Reset(): React.ReactElement {
   const { t } = useTranslation();
   const theme = useTheme();
 

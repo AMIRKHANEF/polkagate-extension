@@ -17,7 +17,7 @@ interface Props {
   className?: string;
 }
 
-function View ({ children, className }: Props): React.ReactElement<Props> {
+function View({ children, className }: Props): React.ReactElement<Props> {
   const [mode, setMode] = useState<PaletteMode>(chooseTheme());
 
   useEffect(() => {
@@ -62,7 +62,7 @@ function View ({ children, className }: Props): React.ReactElement<Props> {
   );
 }
 
-const BodyTheme = createGlobalStyle<{theme: Theme}>`
+const BodyTheme = createGlobalStyle<{ theme: Theme }>`
   body {
     background-color: ${(props) => props.theme.palette.background.paper};
   }

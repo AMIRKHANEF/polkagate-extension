@@ -10,7 +10,7 @@ interface Props {
   className?: string;
 }
 
-export default function Main ({ children, className }: Props): React.ReactElement<Props> {
+export default function Main({ children, className }: Props): React.ReactElement<Props> {
   return (
     <main className={className}>
       <RedGradient style={{ top: '-35px' }} />
