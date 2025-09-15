@@ -28,7 +28,6 @@ interface Props {
 
 function EasyStake ({ address, onClose, selectedPosition, setSelectedPosition }: Props) {
   const { t } = useTranslation();
-
   const genesisHash = selectedPosition?.genesisHash;
   const { token } = useChainInfo(genesisHash);
 

@@ -43,6 +43,7 @@ const DisplayCalls = memo(function DisplayCalls ({ calls }: { calls: string[]; }
   const [open, setOpen] = useState<boolean>(false);
 
   const toggleCollapse = useCallback(() => calls.length > 1 && setOpen((isOpen) => !isOpen), [calls.length]);
+  const toggleCollapse = useCallback(() => calls.length > 1 && setOpen((isOpen) => !isOpen), [calls.length]);
 
   return (
     <>
@@ -193,8 +194,8 @@ function DetailCard ({ historyItem }: Props) {
           const color = isAddress || isHash ? 'text.secondary' : isDate ? 'text.primary' : '#AA83DC';
 
           return (
-            <Fragment key={key}>
-              <Container disableGutters sx={{ display: 'flex', justifyContent: 'space-between' }}>
+            <React.Fragment key={index}>
+              <Container disableGutters key={key} sx={{ display: 'flex', justifyContent: 'space-between' }}>
                 <Typography color='text.secondary' textTransform='capitalize' variant='B-1' width='fit-content'>
                   {toTitleCase(key)}
                 </Typography>
@@ -227,7 +228,7 @@ function DetailCard ({ historyItem }: Props) {
                 </Typography>
               </Container>
               {withDivider && <GradientDivider style={{ my: '7px' }} />}
-            </Fragment>
+            </React.Fragment>
           );
         })}
       </Container>
@@ -243,7 +244,7 @@ function Content ({ historyItem, style = {} }: { historyItem: TransactionDetail 
 
   const { link, name } = useMemo(() => getLink(chainName ?? '', 'extrinsic', historyItem?.txHash ?? ''), [chainName, historyItem?.txHash]);
 
-  const openExplorer = useCallback(() => window.open(link, '_blank'), [link]);
+  const openExplorer = useCallback(() => link && window.open(link, '_blank'), [link]);
 
   return (
     <Grid alignItems='center' container item justifyContent='center' sx={{ bgcolor: '#120D27', border: '2px solid #FFFFFF0D', borderTopLeftRadius: '32px', borderTopRightRadius: '32px', display: 'block', height: 'calc(100% - 78px)', overflow: 'hidden', overflowY: 'auto', p: '10px', position: 'relative', zIndex: 1, ...style }}>
@@ -255,6 +256,7 @@ function Content ({ historyItem, style = {} }: { historyItem: TransactionDetail 
             <FadeOnScroll containerRef={containerRef} />
           </Grid>
           <GradientButton
+            disabled={!link}
             onClick={openExplorer}
             startIconNode={
               <Avatar

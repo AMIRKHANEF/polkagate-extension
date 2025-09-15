@@ -193,8 +193,8 @@ function DetailCard ({ historyItem }: Props) {
           const color = isAddress || isHash ? 'text.secondary' : isDate ? 'text.primary' : '#AA83DC';
 
           return (
-            <Fragment key={key}>
-              <Container disableGutters sx={{ display: 'flex', justifyContent: 'space-between' }}>
+            <React.Fragment key={index}>
+              <Container disableGutters key={key} sx={{ display: 'flex', justifyContent: 'space-between' }}>
                 <Typography color='text.secondary' textTransform='capitalize' variant='B-1' width='fit-content'>
                   {toTitleCase(key)}
                 </Typography>
@@ -227,7 +227,7 @@ function DetailCard ({ historyItem }: Props) {
                 </Typography>
               </Container>
               {withDivider && <GradientDivider style={{ my: '7px' }} />}
-            </Fragment>
+            </React.Fragment>
           );
         })}
       </Container>

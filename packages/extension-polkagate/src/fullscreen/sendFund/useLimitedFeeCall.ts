@@ -15,11 +15,11 @@ import { useCallback, useEffect, useMemo, useState } from 'react';
 import { getValue } from '@polkadot/extension-polkagate/src/popup/account/util';
 import { NATIVE_TOKEN_ASSET_ID, NATIVE_TOKEN_ASSET_ID_ON_ASSETHUB, TEST_NETS } from '@polkadot/extension-polkagate/src/util/constants';
 import { amountToMachine } from '@polkadot/extension-polkagate/src/util/numberUtils';
-import { decodeMultiLocation } from '@polkadot/extension-polkagate/src/util/utils';
+import { decodeMultiLocation, isOnAssetHub } from '@polkadot/extension-polkagate/src/util/utils';
 import { BN_ONE, BN_ZERO, isFunction } from '@polkadot/util';
 
 import { useChainInfo } from '../../hooks';
-import { INVALID_PARA_ID, isAssethub, isOnSameChain, XCM_LOC } from './utils';
+import { INVALID_PARA_ID, isOnSameChain, XCM_LOC } from './utils';
 
 // This hook is used to estimate fees and prepare the transaction for sending funds for testnets mostly and non xcm transfers on other chains since paraspell does not support transfer all as well
 export default function useLimitedFeeCall (address: string | undefined, assetId: string | undefined, assetToTransfer: FetchedBalance | undefined, inputs: Inputs | undefined, genesisHash: string | undefined, teleportState: Teleport, transferType: string) {
@@ -30,7 +30,6 @@ export default function useLimitedFeeCall (address: string | undefined, assetId:
   const [maxFee, setMaxFee] = useState<Balance>();
 
   const decimal = inputs?.decimal;
-  const amount = inputs?.amount;
   const recipientAddress = inputs?.recipientAddress;
 
   const transferableBalance = useMemo(() => getValue('transferable', assetToTransfer), [assetToTransfer]);
@@ -45,7 +44,7 @@ export default function useLimitedFeeCall (address: string | undefined, assetId:
       : parseInt(assetId)
   , [assetId, isForeignAsset, isNativeToken, noAssetId]);
 
-  const amountAsBN = useMemo(() => decimal ? amountToMachine(amount, decimal) : undefined, [amount, decimal]);
+  const amountAsBN = useMemo(() => decimal ? amountToMachine(inputs?.amount, decimal) : undefined, [decimal, inputs?.amount]);
   const isCrossChain = useMemo(() => senderChainName !== inputs?.recipientChain?.text, [inputs?.recipientChain?.text, senderChainName]);
 
   const recipientParaId = useMemo(() => {
@@ -65,7 +64,7 @@ export default function useLimitedFeeCall (address: string | undefined, assetId:
 
     try {
       const module = isNonNativeToken
-        ? isAssethub(genesisHash)
+        ? isOnAssetHub(genesisHash)
           ? isForeignAsset
             ? 'foreignAssets'
             : 'assets'
@@ -107,7 +106,7 @@ export default function useLimitedFeeCall (address: string | undefined, assetId:
   }, [api, isCrossChain, onChainCall]);
 
   const crossChainParams = useMemo(() => {
-    if (!api || !assetToTransfer || !teleportState || isCrossChain === false || (recipientParaId === INVALID_PARA_ID && !teleportState?.isParaTeleport) || amount === undefined) {
+    if (!api || !assetToTransfer || !teleportState || isCrossChain === false || (recipientParaId === INVALID_PARA_ID && !teleportState?.isParaTeleport) || !amountAsBN || amountAsBN.isZero()) {
       return;
     }
 
@@ -132,7 +131,7 @@ export default function useLimitedFeeCall (address: string | undefined, assetId:
       },
       {
         V3: [{
-          fun: { Fungible: amountToMachine(amount, decimal) },
+          fun: { Fungible: amountAsBN },
           id: {
             Concrete: {
               interior: 'Here',
@@ -144,11 +143,11 @@ export default function useLimitedFeeCall (address: string | undefined, assetId:
       0,
       { Unlimited: null }
     ];
-  }, [api, assetToTransfer, teleportState, isCrossChain, recipientParaId, amount, recipientAddress, decimal]);
+  }, [api, assetToTransfer, teleportState, isCrossChain, recipientParaId, amountAsBN, recipientAddress]);
 
   const transaction = useMemo(() => {
     // we only use these parts to support testnets otherwise we use paraSpell to form the transaction
-    if (!genesisHash || !assetToTransfer || recipientAddress === undefined || !amountAsBN || !call) {
+    if (!genesisHash || !assetToTransfer || recipientAddress === undefined || !amountAsBN || amountAsBN.isZero() || !call) {
       return;
     }
 
@@ -172,7 +171,7 @@ export default function useLimitedFeeCall (address: string | undefined, assetId:
     return params && call(...params);
   }, [genesisHash, assetToTransfer, recipientAddress, amountAsBN, call, senderChainName, inputs?.recipientChain?.text, isCrossChain, crossChainParams, isNonNativeToken, onChainCall?.section, parsedAssetId, transferType]);
 
-  const calculateFee = useCallback((amount: Balance | BN, setFeeCall: React.Dispatch<React.SetStateAction<Balance | undefined>>) => {
+  const calculateFee = useCallback((_amount: Balance | BN, setFeeCall: React.Dispatch<React.SetStateAction<Balance | undefined>>) => {
     /** to set Maximum fee which will be used to estimate and show max transferable amount */
     if (!api || !assetToTransfer || !address || !onChainCall) {
       return;
@@ -186,9 +185,9 @@ export default function useLimitedFeeCall (address: string | undefined, assetId:
 
     const _params: unknown[] = isNonNativeToken
       ? ['currencies', 'tokens'].includes(onChainCall.section)
-        ? [address, assetToTransfer.currencyId, amount]
-        : [parsedAssetId, address, amount]
-      : [address, amount];
+        ? [address, assetToTransfer.currencyId, _amount]
+        : [parsedAssetId, address, _amount]
+      : [address, _amount];
 
     onChainCall(..._params).paymentInfo(address).then((i) => setFeeCall(i?.partialFee)).catch(console.error);
   }, [api, address, assetToTransfer, onChainCall, isNonNativeToken, parsedAssetId]);

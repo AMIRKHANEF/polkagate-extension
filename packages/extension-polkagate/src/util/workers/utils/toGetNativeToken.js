@@ -1,32 +1,37 @@
 // Copyright 2019-2025 @polkadot/extension-polkagate authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
-// @ts-nocheck
-
 import { BN_ZERO } from '@polkadot/util';
 
+import { NATIVE_TOKEN_ASSET_ID, NATIVE_TOKEN_ASSET_ID_ON_ASSETHUB } from '../../constants';
 import { isMigratedHub } from '../../migrateHubUtils';
-import { ASSET_HUBS, NATIVE_TOKEN_ASSET_ID, NATIVE_TOKEN_ASSET_ID_ON_ASSETHUB } from '../../constants';
-import { getPriceIdByChainName } from '../../utils';
+import { getPriceIdByChainName, isOnAssetHub } from '../../utils';
 import { getStakingBalances } from '../shared-helpers/getStakingBalances';
 import { balancify } from '.';
 
-export async function toGetNativeToken(addresses, api, chainName) {
+/**
+ * @param {any[]} addresses
+ * @param {import("@polkadot/api").ApiPromise} api
+ * @param {string | undefined} chainName
+ */
+export async function toGetNativeToken (addresses, api, chainName) {
   const _result = {};
 
   const balances = await Promise.all(addresses.map((address) => api.derive.balances.all(address)));
 
-  const systemBalance = await Promise.all(addresses.map((address) => api.query.system.account(address)));
-  const existentialDeposit = api.consts.balances.existentialDeposit;
+  const systemBalance = await Promise.all(addresses.map((address) => api.query['system']['account'](address)));
+  const existentialDeposit = api.consts['balances']['existentialDeposit'];
 
   await Promise.all(addresses.map(async (address, index) => {
+    // @ts-ignore
     balances[index].ED = existentialDeposit;
+    // @ts-ignore
     balances[index].frozenBalance = systemBalance[index].data.frozen;
 
     const totalBalance = balances[index].freeBalance.add(balances[index].reservedBalance);
 
     const genesisHash = api.genesisHash.toString();
-    const isAssetHub = ASSET_HUBS.includes(genesisHash);
+    const isAssetHub = isOnAssetHub(genesisHash);
 
     let maybeStakingTotals;
 
@@ -34,6 +39,7 @@ export async function toGetNativeToken(addresses, api, chainName) {
       maybeStakingTotals = await getStakingBalances(address, api);
     }
 
+    // @ts-ignore
     _result[address] = [{
       assetId: isAssetHub ? NATIVE_TOKEN_ASSET_ID_ON_ASSETHUB : NATIVE_TOKEN_ASSET_ID,
       balanceDetails: balancify(balances[index]),
