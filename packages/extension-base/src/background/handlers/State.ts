@@ -15,6 +15,7 @@ import { assert } from '@polkadot/util';
 
 import { MetadataStore } from '../../stores';
 import { withErrorLog } from './helpers';
+import type { CreateMLCEngine } from '@mlc-ai/web-llm';
 
 interface Resolver<T> {
   reject: (error: Error) => void;
@@ -161,6 +162,8 @@ export default class State {
   public readonly authUrlSubjects: Record<string, BehaviorSubject<AuthUrlInfo>> = {};
 
   public defaultAuthAccountSelection: string[] = [];
+
+  public engine: Awaited<ReturnType<typeof CreateMLCEngine>> | null = null;
 
   constructor(providers: Providers = {}) {
     this.#providers = providers;
