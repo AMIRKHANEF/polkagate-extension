@@ -5479,6 +5479,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@types/emscripten@npm:*":
+  version: 1.41.5
+  resolution: "@types/emscripten@npm:1.41.5"
+  checksum: 10/60dfcced39b2d0c94f31907c5cf5d97fe06ed35ed6cb134650a1a96bae861302722d4a6f459b484ea09588cde70cbcc034974454a746be3ce9688b52398d2953
+  languageName: node
+  linkType: hard
+
 "@types/enzyme-adapter-react-16@npm:^1.0.6":
   version: 1.0.9
   resolution: "@types/enzyme-adapter-react-16@npm:1.0.9"
@@ -6033,6 +6040,16 @@ __metadata:
   dependencies:
     "@types/node": "npm:*"
   checksum: 10/b4b5381122465d80ea8b158537c00bc82317222d3fb31fd7229ff25b31fa89134abfbab969118da55622236bf3d8fee75759f3959908b5688991f492008f29bc
+  languageName: node
+  linkType: hard
+
+"@types/sql.js@npm:^1.4.9":
+  version: 1.4.9
+  resolution: "@types/sql.js@npm:1.4.9"
+  dependencies:
+    "@types/emscripten": "npm:*"
+    "@types/node": "npm:*"
+  checksum: 10/028e4ed497744d8f2060fd286c4ad563e0b2fea024244d8fba805eadb0cde0af5b8a5a0ab6d2e8120b7acb9daed9f1d435642588be8fbb3af0b72c5972eace2d
   languageName: node
   linkType: hard
 
@@ -19557,6 +19574,7 @@ __metadata:
     "@types/react-router-dom": "npm:^5.3.3"
     "@types/react-spinkit": "npm:^3.0.10"
     "@types/react-window": "npm:^1.8.8"
+    "@types/sql.js": "npm:^1.4.9"
     babel-plugin-transform-import-meta: "npm:^2.1.1"
     better-react-spinkit: "npm:^2.0.4"
     chance: "npm:^1.1.11"
@@ -19589,6 +19607,7 @@ __metadata:
     semantic-release: "npm:^24.1.0"
     semver: "npm:^7.6.3"
     sinon-chrome: "npm:^3.0.1"
+    sql.js: "npm:^1.13.0"
     style-loader: "npm:^3.3.2"
     typedoc: "npm:^0.27.9"
     umi-request: "npm:^1.4.0"
@@ -20514,6 +20533,13 @@ __metadata:
   dependencies:
     through2: "npm:~2.0.0"
   checksum: 10/61bd2228f57dc31e1b5965d969db450ae4c385899b8adfb9da45486ae23862ad005a5b4efee1f4ac6530667c6d51e89bc695a64ca7266f1b8847e3806fcafda3
+  languageName: node
+  linkType: hard
+
+"sql.js@npm:^1.13.0":
+  version: 1.13.0
+  resolution: "sql.js@npm:1.13.0"
+  checksum: 10/2d8e5d72c3132c6e37854bb9896891a46bc05613e53a34d70a3ded43405a5fa5a45ae94c29c8a3fce0d50b577a90ace71d9b68572a2a59601a8da9aa06398b04
   languageName: node
   linkType: hard
 
