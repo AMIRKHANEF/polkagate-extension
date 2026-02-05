@@ -842,11 +842,6 @@ export interface AccountsAssets {
 
 export interface SavedAccountsAssets { balances: AccountsAssets[], timestamp: number }
 
-export interface AccountsAssetsContextType {
-  accountsAssets: SavedAssets | null | undefined;
-  setAccountsAssets: (savedAccountAssets: SavedAssets) => void;
-}
-
 export type Severity = 'error' | 'warning' | 'info' | 'success'
 
 export interface AlertType {

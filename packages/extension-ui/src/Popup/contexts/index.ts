@@ -1,7 +1,6 @@
 // Copyright 2019-2026 @polkadot/extension-polkagate authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
-export { default as AccountAssetProvider } from './AccountAssetProvider';
 export { default as AccountIconThemeProvider } from './AccountIconThemeProvider';
 export { default as AccountProvider } from './AccountProvider';
 export { default as ActionProvider } from './ActionProvider';

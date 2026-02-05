@@ -3,9 +3,9 @@
 
 import type { FetchedBalance } from '../util/types';
 
-import { useContext, useMemo } from 'react';
+import { useMemo } from 'react';
 
-import { AccountsAssetsContext } from '../components';
+import { useVariable } from '../store/hooks';
 import { isHexToBn } from '../util';
 import { TEST_NETS } from '../util/constants';
 import useIsTestnetEnabled from './useIsTestnetEnabled';
@@ -36,14 +36,14 @@ export const BN_MEMBERS = [
  *
  * @param {string | undefined} address - The account address for which to fetch assets.
  * @param {string} [genesisHash] - Optional chain genesis hash to filter assets for a specific chain.
- * @returns {FetchedBalance[] | undefined | null} 
+ * @returns {FetchedBalance[] | undefined | null}
  *   - Returns an array of `FetchedBalance` objects if assets exist,
  *   - `null` if the account has no matching assets,
  *   - `undefined` if the address is not provided or balances are unavailable.
  */
 
 export default function useAccountAssets(address: string | undefined, genesisHash?: string): FetchedBalance[] | undefined | null {
-  const { accountsAssets } = useContext(AccountsAssetsContext);
+  const accountsAssets = useVariable('accountsAssets');
   const isTestnetEnabled = useIsTestnetEnabled();
 
   return useMemo(() => {

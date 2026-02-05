@@ -4,14 +4,15 @@
 import type { AssetsWithUiAndPrice } from './types';
 
 import { Container, useTheme } from '@mui/material';
-import React, { useContext, useMemo } from 'react';
+import React, { useMemo } from 'react';
 
+import { useAppSelector } from '@polkadot/extension-polkagate/src/store/hooks';
 import { calcPrice } from '@polkadot/extension-polkagate/src/util';
 import { TEST_NETS } from '@polkadot/extension-polkagate/src/util/constants';
 import getLogo2 from '@polkadot/extension-polkagate/src/util/getLogo2';
 import { BN, BN_ZERO } from '@polkadot/util';
 
-import { AccountsAssetsContext, AssetNull } from '../../../components';
+import { AssetNull } from '../../../components';
 import { usePortfolio, usePrices, useTranslation } from '../../../hooks';
 import { VelvetBox } from '../../../style';
 import AssetsRows from './AssetsRows';
@@ -23,7 +24,7 @@ function AssetsBars(): React.ReactElement {
   const theme = useTheme();
   const pricesInCurrencies = usePrices();
   const youHave = usePortfolio();
-  const { accountsAssets } = useContext(AccountsAssetsContext);
+  const accountsAssets = useAppSelector((state) => state.assets.accountsAssets);
 
   const assets = useMemo((): AssetsWithUiAndPrice[] | undefined => {
     if (!accountsAssets || !youHave || !pricesInCurrencies) {

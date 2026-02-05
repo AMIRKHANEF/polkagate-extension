@@ -1,9 +1,9 @@
 // Copyright 2019-2026 @polkadot/extension-polkagate authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
-import { useContext, useMemo } from 'react';
+import { useMemo } from 'react';
 
-import { AccountsAssetsContext } from '../components';
+import { useVariable } from '../store/hooks';
 import { calcChange, calcPrice } from '../util';
 import usePrices from './usePrices';
 
@@ -22,7 +22,7 @@ export interface PortfolioType {
  */
 export default function usePortfolio(address?: string): PortfolioType | undefined | null {
   const pricesInCurrencies = usePrices();
-  const { accountsAssets } = useContext(AccountsAssetsContext);
+  const accountsAssets = useVariable('accountsAssets');
 
   return useMemo(() => {
     if (!accountsAssets?.balances) {

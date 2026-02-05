@@ -3,7 +3,7 @@
 
 import type { AccountsContext, AuthorizeRequest, MetadataRequest, SigningRequest } from '@polkadot/extension-base/background/types';
 import type { SettingsStruct } from '@polkadot/ui-settings/types';
-import type { AccountIconThemeContextType, AccountsAssetsContextType, AlertContextType, APIsContext, CurrencyContextType, DropdownOption, FetchingRequests, PricesContextType, ReferendaContextType, SelectedContextType, UserAddedChains } from '../util/types';
+import type { AccountIconThemeContextType, AlertContextType, APIsContext, CurrencyContextType, DropdownOption, FetchingRequests, PricesContextType, ReferendaContextType, SelectedContextType, UserAddedChains } from '../util/types';
 
 import React from 'react';
 
@@ -11,7 +11,6 @@ import settings from '@polkadot/ui-settings';
 import { noop } from '@polkadot/util';
 
 const AccountContext = React.createContext<AccountsContext>({ accounts: [], hierarchy: [], master: undefined });
-const AccountsAssetsContext = React.createContext<AccountsAssetsContextType>({ accountsAssets: undefined, setAccountsAssets: noop });
 const ActionContext = React.createContext<(to?: string) => void>(noop);
 const APIContext = React.createContext<APIsContext>({ apis: {}, getApi: () => Promise.resolve(undefined) });
 const AlertContext = React.createContext<AlertContextType>({ alerts: [], setAlerts: noop });
@@ -31,10 +30,8 @@ const GenesisHashOptionsContext = React.createContext<DropdownOption[]>([]);
 const AccountIconThemeContext = React.createContext<AccountIconThemeContextType>({ accountIconTheme: undefined, setAccountIconTheme: noop });
 const WorkerContext = React.createContext<MessagePort | undefined>(undefined);
 
-export {
-  AccountContext,
+export { AccountContext,
   AccountIconThemeContext,
-  AccountsAssetsContext,
   ActionContext,
   AlertContext,
   APIContext,
@@ -51,5 +48,4 @@ export {
   SigningReqContext,
   ToastContext,
   UserAddedChainContext,
-  WorkerContext
-};
+  WorkerContext };
