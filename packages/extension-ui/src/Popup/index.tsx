@@ -11,6 +11,7 @@ import { store } from '@polkadot/extension-polkagate/src/store';
 import AccountAssetsBridge from './bridges/AccountAssetsBridge';
 import AccountIconThemeBridge from './bridges/AccountIconThemeBridge';
 import ExtensionLockBridge from './bridges/ExtensionLockBridge';
+import GenesisHashOptionsBridge from './bridges/GenesisHashOptionsBridge';
 import SettingsBridge from './bridges/SettingsBridge';
 import PricesProvider from './contexts/PricesProvider';
 import SelectedProvider from './contexts/SelectedProvider';
@@ -25,36 +26,35 @@ export default function Popup(): React.ReactElement {
         <ActionProvider>
           <SettingsBridge />
           <AccountIconThemeBridge />
-          <GenesisHashOptionsProvider>
-            <WorkerProvider>
-              <AccountProvider>
-                <ApiProvider>
-                  <AlertProvider>
-                    <FetchingProvider>
-                      <CurrencyProvider>
-                        <PricesProvider>
-                          <ReferendaProvider>
-                            <RequestsProvider>
-                              <MediaProvider>
-                                <UserAddedChainsProvider>
-                                  <SelectedProvider>
-                                    <AccountAssetsBridge />
-                                    <Loading>
-                                      <AppRoutes />
-                                    </Loading>
-                                  </SelectedProvider>
-                                </UserAddedChainsProvider>
-                              </MediaProvider>
-                            </RequestsProvider>
-                          </ReferendaProvider>
-                        </PricesProvider>
-                      </CurrencyProvider>
-                    </FetchingProvider>
-                  </AlertProvider>
-                </ApiProvider>
-              </AccountProvider>
-            </WorkerProvider>
-          </GenesisHashOptionsProvider>
+          <GenesisHashOptionsBridge />
+          <WorkerProvider>
+            <AccountProvider>
+              <ApiProvider>
+                <AlertProvider>
+                  <FetchingProvider>
+                    <CurrencyProvider>
+                      <PricesProvider>
+                        <ReferendaProvider>
+                          <RequestsProvider>
+                            <MediaProvider>
+                              <UserAddedChainsProvider>
+                                <SelectedProvider>
+                                  <AccountAssetsBridge />
+                                  <Loading>
+                                    <AppRoutes />
+                                  </Loading>
+                                </SelectedProvider>
+                              </UserAddedChainsProvider>
+                            </MediaProvider>
+                          </RequestsProvider>
+                        </ReferendaProvider>
+                      </PricesProvider>
+                    </CurrencyProvider>
+                  </FetchingProvider>
+                </AlertProvider>
+              </ApiProvider>
+            </AccountProvider>
+          </WorkerProvider>
         </ActionProvider>
       </Provider>
     </AnimatePresence>

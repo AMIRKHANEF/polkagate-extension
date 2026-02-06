@@ -2,7 +2,7 @@
 // SPDX-License-Identifier: Apache-2.0
 
 import type { AccountsContext, AuthorizeRequest, MetadataRequest, SigningRequest } from '@polkadot/extension-base/background/types';
-import type { AlertContextType, APIsContext, CurrencyContextType, DropdownOption, FetchingRequests, PricesContextType, ReferendaContextType, SelectedContextType, UserAddedChains } from '../util/types';
+import type { AlertContextType, APIsContext, CurrencyContextType, FetchingRequests, PricesContextType, ReferendaContextType, SelectedContextType, UserAddedChains } from '../util/types';
 
 import React from 'react';
 
@@ -23,7 +23,6 @@ const MetadataReqContext = React.createContext<MetadataRequest[]>([]);
 const SigningReqContext = React.createContext<SigningRequest[]>([]);
 const ToastContext = React.createContext<({ show: (message: string) => void })>({ show: noop });
 const UserAddedChainContext = React.createContext<UserAddedChains>({});
-const GenesisHashOptionsContext = React.createContext<DropdownOption[]>([]);
 const WorkerContext = React.createContext<MessagePort | undefined>(undefined);
 
 export { AccountContext,
@@ -33,7 +32,6 @@ export { AccountContext,
   AuthorizeReqContext,
   CurrencyContext,
   FetchingContext,
-  GenesisHashOptionsContext,
   MediaContext,
   MetadataReqContext,
   PricesContext,

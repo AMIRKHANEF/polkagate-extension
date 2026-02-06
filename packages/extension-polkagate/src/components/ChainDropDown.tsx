@@ -9,8 +9,9 @@ import useAccountSelectedChain from '@polkadot/extension-polkagate/src/hooks/use
 import { updateStorage } from '@polkadot/extension-polkagate/src/util/index';
 
 import { useSelectedAccount } from '../hooks';
+import { useVariable } from '../store/hooks';
 import { STORAGE_KEY } from '../util/constants';
-import { DropSelect, GenesisHashOptionsContext } from '.';
+import { DropSelect } from '.';
 
 const DEFAULT_SELECTED_OPTION: DropdownOption = { text: 'Select a chain', value: '' };
 
@@ -20,7 +21,7 @@ interface Props {
 }
 
 function ChainDropDown({ style = {}, withSelectAChainText = true }: Props): React.ReactElement {
-  const options = useContext(GenesisHashOptionsContext);
+  const options = useVariable('genesisHashOptions');
   const selectedAccount = useSelectedAccount();
   const savedSelectedChain = useAccountSelectedChain(selectedAccount?.address);
 

@@ -3,7 +3,7 @@
 
 import { useContext, useEffect } from 'react';
 
-import { AccountContext, GenesisHashOptionsContext, UserAddedChainContext, WorkerContext } from '@polkadot/extension-polkagate/src/components/contexts';
+import { AccountContext, UserAddedChainContext, WorkerContext } from '@polkadot/extension-polkagate/src/components/contexts';
 import { useNotifications } from '@polkadot/extension-polkagate/src/hooks';
 import useAssetsBalances from '@polkadot/extension-polkagate/src/hooks/useAssetsBalances';
 import useNFT from '@polkadot/extension-polkagate/src/hooks/useNFT';
@@ -14,7 +14,7 @@ export default function AccountAssetsBridge() {
     const dispatch = useAppDispatch();
 
     const { accounts } = useContext(AccountContext);
-    const genesisHashOptions = useContext(GenesisHashOptionsContext);
+    const genesisHashOptions = useVariable('genesisHashOptions');
     const userAddedChainCtx = useContext(UserAddedChainContext);
     const worker = useContext(WorkerContext);
     const isExtensionLocked = useVariable('extensionLock');

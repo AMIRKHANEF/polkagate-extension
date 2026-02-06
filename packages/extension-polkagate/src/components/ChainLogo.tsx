@@ -1,20 +1,20 @@
 // Copyright 2019-2026 @polkadot/extension-polkagate authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
-//@ts-nocheck
+// @ts-nocheck
 import { fas } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { Avatar, Box } from '@mui/material';
-import React, { useContext, useEffect, useRef, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 
 import { logoWhiteTransparent } from '../assets/logos';
 import { useUserAddedChainColor } from '../fullscreen/addNewChain/utils';
 import { useIsDark } from '../hooks';
+import { useVariable } from '../store/hooks';
 import { convertToCamelCase, sanitizeChainName } from '../util';
 import { CHAINS_WITH_BLACK_LOGO, TOKENS_WITH_BLACK_LOGO } from '../util/constants';
 import getLogo2 from '../util/getLogo2';
 import { mapHubToRelay } from '../util/migrateHubUtils';
-import { GenesisHashOptionsContext } from './contexts';
 
 interface Props {
   chainName?: string;
@@ -60,7 +60,7 @@ function ChainLogo({ chainName, genesisHash, logo, logoRoundness = '50%', showSq
   const imgRef = useRef<HTMLImageElement>(null);
   const _genesisHash = mapHubToRelay(genesisHash);
   const maybeUserAddedChainColor = useUserAddedChainColor(_genesisHash);
-  const options = useContext(GenesisHashOptionsContext);
+  const options = useVariable('genesisHashOptions');
 
   const [isDarkLogo, setIsDarkLogo] = useState(false);
 
@@ -142,7 +142,7 @@ function ChainLogo({ chainName, genesisHash, logo, logoRoundness = '50%', showSq
                 ...style
               }}
               variant='square'
-            />
+              />
             : <FontAwesomeIcon
               fontSize='15px'
               icon={fas[convertToCamelCase(_logo)]}
@@ -154,7 +154,7 @@ function ChainLogo({ chainName, genesisHash, logo, logoRoundness = '50%', showSq
                 width: size,
                 ...style
               }}
-            />
+              />
           }
         </>
         : _chainName
@@ -169,7 +169,7 @@ function ChainLogo({ chainName, genesisHash, logo, logoRoundness = '50%', showSq
               ...style
             }}
             variant='square'
-          >
+            >
             {_chainName?.charAt(0)?.toUpperCase() || ''}
           </Avatar>
           : <Box
@@ -183,7 +183,7 @@ function ChainLogo({ chainName, genesisHash, logo, logoRoundness = '50%', showSq
               p: '4px',
               width: size
             }}
-          />
+            />
       }
     </>
   );

@@ -6,6 +6,7 @@ import { configureStore } from '@reduxjs/toolkit';
 import accountItemThemeReducer from './slices/AccountIconThemeSlice';
 import assetsReducer from './slices/assetsSlice';
 import extensionLockReducer from './slices/extensionLockSlice';
+import genesisHashOptionsReducer from './slices/genesisHashOptionsSlice';
 import settingsReducer from './slices/settingsSlice';
 
 export const store = configureStore({
@@ -17,6 +18,7 @@ export const store = configureStore({
         accountIconTheme: accountItemThemeReducer,
         assets: assetsReducer,
         extensionLock: extensionLockReducer,
+        genesisHashOptions: genesisHashOptionsReducer,
         settings: settingsReducer
     }
 });

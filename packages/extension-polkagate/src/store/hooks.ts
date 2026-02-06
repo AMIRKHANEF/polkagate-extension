@@ -16,6 +16,8 @@ export const selectors = {
 
   extensionLock: (state: RootState) => state.extensionLock,
 
+  genesisHashOptions: (state: RootState) => state.genesisHashOptions,
+
   settings: (state: RootState) => state.settings
 } as const;
 

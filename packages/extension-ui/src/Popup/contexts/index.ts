@@ -7,7 +7,6 @@ export { default as AlertProvider } from './AlertProvider';
 export { default as ApiProvider } from './ApiProvider';
 export { default as CurrencyProvider } from './CurrencyProvider';
 export { default as FetchingProvider } from './FetchingProvider';
-export { default as GenesisHashOptionsProvider } from './GenesisHashOptionsProvider';
 export { default as MediaProvider } from './MediaProvider';
 export { default as ReferendaProvider } from './ReferendaProvider';
 export { default as RequestsProvider } from './RequestsProvider';
