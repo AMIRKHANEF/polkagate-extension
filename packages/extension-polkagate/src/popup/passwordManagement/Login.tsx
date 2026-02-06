@@ -8,6 +8,8 @@ import { useNavigate } from 'react-router-dom';
 import OnboardingLayout from '@polkadot/extension-polkagate/src/fullscreen/onboarding/OnboardingLayout';
 import useCheckMasterPassword from '@polkadot/extension-polkagate/src/hooks/useCheckMasterPassword';
 import { unlockAllAccounts, windowOpen } from '@polkadot/extension-polkagate/src/messaging';
+import { useAppDispatch } from '@polkadot/extension-polkagate/src/store/hooks';
+import { setIsExtensionLocked } from '@polkadot/extension-polkagate/src/store/slices/extensionLockSlice';
 import { getStorage, setStorage } from '@polkadot/extension-polkagate/src/util';
 import { STORAGE_KEY } from '@polkadot/extension-polkagate/src/util/constants';
 import { blake2AsHex } from '@polkadot/util-crypto';
@@ -15,7 +17,6 @@ import { blake2AsHex } from '@polkadot/util-crypto';
 import { Box as BoxIcon } from '../../assets/icons';
 import { DecisionButtons, GradientBox, MySwitch, PasswordInput } from '../../components';
 import { updateStorage } from '../../components/Loading';
-import { useExtensionLockContext } from '../../context/ExtensionLockContext';
 import { openOrFocusTab } from '../../fullscreen/accountDetails/components/CommonTasks';
 import { useAutoLockPeriod, useBackground, useIsExtensionPopup, useIsHideNumbers, useIsPasswordMigrated, useTranslation } from '../../hooks';
 import { Version } from '../../partials';
@@ -35,7 +36,7 @@ function Content({ setStep }: Props): React.ReactElement {
   const isExtension = useIsExtensionPopup();
   const isPasswordMigrated = useIsPasswordMigrated();
   const { isHideNumbers, toggleHideNumbers } = useIsHideNumbers();
-  const { setExtensionLock } = useExtensionLockContext();
+  const dispatch = useAppDispatch();
   const autoLockPeriod = useAutoLockPeriod();
   const isUnlockingRef = useRef(false);
 
@@ -70,34 +71,34 @@ function Content({ setStep }: Props): React.ReactElement {
       sharedPasswordNoLoginSet;
   }, [accountsNeedMigration?.length, hasLocalAccounts, isPasswordMigrated]);
 
-  const handleDirectUnlock = useCallback(async (password: string, period: number) => {
+  const handleDirectUnlock = useCallback(async(password: string, period: number) => {
     const success = await unlockAllAccounts(password, period, true);
 
     if (success) {
-      setExtensionLock(false);
+      dispatch(setIsExtensionLocked(false));
       hasLocalAccounts && setStorage(STORAGE_KEY.IS_PASSWORD_MIGRATED, true) as unknown as void;
       setStorage(STORAGE_KEY.IS_FORGOTTEN, undefined) as unknown as void;
     } else {
-      setExtensionLock(true);
+      dispatch(setIsExtensionLocked(true));
       setIsPasswordError(true);
     }
 
     setPlainPassword(undefined);
-  }, [hasLocalAccounts, setExtensionLock]);
+  }, [hasLocalAccounts, dispatch]);
 
-  const handlePasswordMigration = useCallback(async () => {
+  const handlePasswordMigration = useCallback(async() => {
     await updateStorage(STORAGE_KEY.LOGIN_INFO, { lastLoginTime: Date.now(), status: LOGIN_STATUS.SET }); // DEPRECATED, will be removed in future releases
     setStorage(STORAGE_KEY.IS_FORGOTTEN, undefined) as unknown as void;
     setHashedPassword(undefined);
-    setExtensionLock(false);
+    dispatch(setIsExtensionLocked(false));
     const path = '/migratePasswords';
 
     isExtension
       ? windowOpen(path).catch(console.error)
       : navigate(path) as void;
-  }, [isExtension, navigate, setExtensionLock]);
+  }, [isExtension, navigate, dispatch]);
 
-  const tryUnlock = useCallback(async () => {
+  const tryUnlock = useCallback(async() => {
     if (
       !plainPassword ||
       !autoLockPeriod ||

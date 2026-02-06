@@ -5,7 +5,7 @@ import { Stack } from '@mui/material';
 import React, { useContext, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 
-import { useExtensionLockContext } from '@polkadot/extension-polkagate/src/context/ExtensionLockContext';
+import { useVariable } from '@polkadot/extension-polkagate/src/store/hooks';
 
 import { AccountContext } from '../../components';
 import { useAlerts, useTranslation } from '../../hooks';
@@ -22,7 +22,7 @@ function HomePageFullScreen(): React.ReactElement {
 
   const { notify } = useAlerts();
   const { accounts } = useContext(AccountContext);
-  const { isExtensionLocked } = useExtensionLockContext();
+  const isExtensionLocked = useVariable('extensionLock');
 
   useEffect(() => {
     if (isExtensionLocked === false && accounts?.length === 0) {

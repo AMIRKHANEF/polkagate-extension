@@ -8,10 +8,11 @@ import React, { useCallback, useEffect, useMemo, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 import { lockLottie, masterKey, migratePassword } from '@polkadot/extension-polkagate/src/assets/animations';
-import { useExtensionLockContext } from '@polkadot/extension-polkagate/src/context/ExtensionLockContext';
 import OnboardingLayout from '@polkadot/extension-polkagate/src/fullscreen/onboarding/OnboardingLayout';
 import useCheckMasterPassword from '@polkadot/extension-polkagate/src/hooks/useCheckMasterPassword';
 import { accountsChangePassword, lockExtension } from '@polkadot/extension-polkagate/src/messaging';
+import { useAppDispatch } from '@polkadot/extension-polkagate/src/store/hooks';
+import { setIsExtensionLocked } from '@polkadot/extension-polkagate/src/store/slices/extensionLockSlice';
 import { setStorage } from '@polkadot/extension-polkagate/src/util';
 import { STORAGE_KEY } from '@polkadot/extension-polkagate/src/util/constants';
 
@@ -29,7 +30,7 @@ function MigratePasswords(): React.ReactElement {
   const theme = useTheme();
   const navigate = useNavigate();
   const { notify } = useAlerts();
-  const { setExtensionLock } = useExtensionLockContext();
+  const dispatch = useAppDispatch();
 
   const [step, setStep] = useState(STEP.PASSWORD);
   const [isConfirmingMasterPassword, setConfirmingMasterPassword] = useState(false);
@@ -101,20 +102,20 @@ function MigratePasswords(): React.ReactElement {
 
     setStorage(STORAGE_KEY.IS_PASSWORD_MIGRATED, true)
       .then(() => {
-        setExtensionLock(true);
+        dispatch(setIsExtensionLocked(true));
         navigate('/') as void;
         lockExtension().catch(console.error);
       }).catch(console.error);
-  }, [navigate, setExtensionLock]);
+  }, [navigate, dispatch]);
 
   return (
     <OnboardingLayout childrenStyle={{ justifyContent: 'center', margin: 'auto', width: '440px' }} showBread={false} showLeftColumn={false}>
       <Grid container item justifyContent='center' sx={{ p: '18px 15px 26px', position: 'relative', zIndex: 1 }}>
         {step === STEP.PASSWORD
-          ? <DotLottieReact autoplay loop src={masterKey} style={{ height: '150px', width: '150px' }} />
+          ? <DotLottieReact autoplay loop src={masterKey as string} style={{ height: '150px', width: '150px' }} />
           : step === STEP.MIGRATING
-            ? <DotLottieReact autoplay loop src={migratePassword} style={{ height: '150px', width: '150px' }} />
-            : <DotLottieReact autoplay src={lockLottie} style={{ height: '130px', width: '130px' }} />
+            ? <DotLottieReact autoplay loop src={migratePassword as string} style={{ height: '150px', width: '150px' }} />
+            : <DotLottieReact autoplay src={lockLottie as string} style={{ height: '130px', width: '130px' }} />
         }
         <Typography sx={{ lineHeight: '32px', mb: '12px', mt: '20px', width: '100%' }} textTransform='uppercase' variant='H-2'>
           <TwoToneText

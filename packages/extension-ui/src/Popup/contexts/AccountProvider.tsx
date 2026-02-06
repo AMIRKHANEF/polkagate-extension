@@ -7,9 +7,10 @@ import React, { useEffect, useState } from 'react';
 
 import { canDerive } from '@polkadot/extension-base/utils';
 import { AccountContext } from '@polkadot/extension-polkagate/src/components/contexts';
-import { useExtensionLockContext } from '@polkadot/extension-polkagate/src/context/ExtensionLockContext';
 import useIsForgotten from '@polkadot/extension-polkagate/src/hooks/useIsForgotten';
 import { subscribeAccounts, tieAccount } from '@polkadot/extension-polkagate/src/messaging';
+import { useAppDispatch } from '@polkadot/extension-polkagate/src/store/hooks';
+import { setIsExtensionLocked } from '@polkadot/extension-polkagate/src/store/slices/extensionLockSlice';
 import { getStorage, setStorage, updateStorage } from '@polkadot/extension-polkagate/src/util';
 import { buildHierarchy } from '@polkadot/extension-polkagate/src/util/buildHierarchy';
 import { STORAGE_KEY } from '@polkadot/extension-polkagate/src/util/constants';
@@ -29,7 +30,7 @@ export default function AccountProvider({ children }: { children: React.ReactNod
   const [accounts, setAccounts] = useState<null | AccountJson[]>(null);
   const [accountCtx, setAccountCtx] = useState<AccountsContext>({ accounts: [], hierarchy: [] });
   const isForgotten = useIsForgotten();
-  const { setExtensionLock } = useExtensionLockContext();
+  const dispatch = useAppDispatch();
 
   useEffect(() => {
     subscribeAccounts(setAccounts).catch(console.log);
@@ -44,12 +45,12 @@ export default function AccountProvider({ children }: { children: React.ReactNod
     const hasLocalAccount = accounts.some(({ isExternal }) => !isExternal);
 
     if (!hasLocalAccount) {
-      setExtensionLock(false);
+      dispatch(setIsExtensionLocked(false));
     }
 
     // TODO: this needs to be removed on future releases
     // eslint-disable-next-line no-void
-    void (async () => {
+    void (async() => {
       try {
         // Migrate accounts to any chain if not already migrated
         const migrated = await getStorage(STORAGE_KEY.IS_ACCOUNT_MIGRATED_TO_ANY_CHAIN);

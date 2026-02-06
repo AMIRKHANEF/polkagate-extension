@@ -6,7 +6,9 @@ import { Unlock } from 'iconsax-react';
 import React, { useCallback } from 'react';
 import { useNavigate } from 'react-router-dom';
 
-import { useExtensionLockContext } from '../../../../context/ExtensionLockContext';
+import { useAppDispatch } from '@polkadot/extension-polkagate/src/store/hooks';
+import { setIsExtensionLocked } from '@polkadot/extension-polkagate/src/store/slices/extensionLockSlice';
+
 import { useAutoLockPeriod, useIsDark, useTranslation } from '../../../../hooks';
 import { lockExtension } from '../../../../messaging';
 
@@ -16,17 +18,17 @@ export default function Lock({ isExtension, style }: { isExtension: boolean, sty
   const navigate = useNavigate();
   const autoLockPeriod = useAutoLockPeriod();
 
-  const { setExtensionLock } = useExtensionLockContext();
+  const dispatch = useAppDispatch();
 
   const onClick = useCallback((): void => {
     if (autoLockPeriod === undefined) {
       return;
     }
 
-    setExtensionLock(true);
+    dispatch(setIsExtensionLocked(true));
     navigate('/') as void;
     lockExtension().catch(console.error);
-  }, [autoLockPeriod, navigate, setExtensionLock]);
+  }, [autoLockPeriod, navigate, dispatch]);
 
   return (
     <Grid

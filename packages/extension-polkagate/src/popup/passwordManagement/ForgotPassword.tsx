@@ -6,12 +6,13 @@ import { Warning2 } from 'iconsax-react';
 import React, { useCallback, useState } from 'react';
 
 import { forgetAccountsAll } from '@polkadot/extension-polkagate/src/messaging';
+import { useAppDispatch } from '@polkadot/extension-polkagate/src/store/hooks';
+import { setIsExtensionLocked } from '@polkadot/extension-polkagate/src/store/slices/extensionLockSlice';
 import { updateStorage } from '@polkadot/extension-polkagate/src/util';
 import { STORAGE_KEY } from '@polkadot/extension-polkagate/src/util/constants';
 import { switchToOrOpenTab } from '@polkadot/extension-polkagate/src/util/switchToOrOpenTab';
 
 import { BackWithLabel, DecisionButtons, GlowCheckbox, GradientBox } from '../../components';
-import { useExtensionLockContext } from '../../context/ExtensionLockContext';
 import { useBackground, useIsExtensionPopup } from '../../hooks';
 import useTranslation from '../../hooks/useTranslation';
 import { Version } from '../../partials';
@@ -25,21 +26,21 @@ interface Props {
 
 export function ForgotPasswordContent({ onClose }: { onClose: () => void }): React.ReactElement<Props> {
   const { t } = useTranslation();
-  const { setExtensionLock } = useExtensionLockContext();
+  const dispatch = useAppDispatch();
   const isExtension = useIsExtensionPopup();
 
   const [acknowledged, setAcknowledge] = useState<boolean>(false);
   const [isBusy, setBusy] = useState<boolean>(false);
 
-  const onConfirmForgotPassword = useCallback(async () => {
+  const onConfirmForgotPassword = useCallback(async() => {
     setBusy(true);
     await updateStorage(STORAGE_KEY.IS_FORGOTTEN, { status: true });
     await forgetAccountsAll();
-    setExtensionLock(false);
+    dispatch(setIsExtensionLocked(false));
     setBusy(false);
 
     !isExtension && switchToOrOpenTab('/reset-wallet', true);
-  }, [isExtension, setExtensionLock]);
+  }, [dispatch, isExtension]);
 
   const toggleAcknowledge = useCallback((state: boolean) => {
     setAcknowledge(state);

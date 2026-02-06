@@ -6,8 +6,9 @@ import { Check, DocumentText } from 'iconsax-react';
 import React, { useCallback } from 'react';
 import { useNavigate } from 'react-router-dom';
 
-import { useExtensionLockContext } from '@polkadot/extension-polkagate/src/context/ExtensionLockContext';
 import CreationButton from '@polkadot/extension-polkagate/src/fullscreen/haveWallet/CreationButton';
+import { useAppDispatch } from '@polkadot/extension-polkagate/src/store/hooks';
+import { setIsExtensionLocked } from '@polkadot/extension-polkagate/src/store/slices/extensionLockSlice';
 import { updateStorage } from '@polkadot/extension-polkagate/src/util';
 import { STORAGE_KEY } from '@polkadot/extension-polkagate/src/util/constants';
 import { switchToOrOpenTab } from '@polkadot/extension-polkagate/src/util/switchToOrOpenTab';
@@ -105,19 +106,20 @@ export function ResetContent(): React.ReactElement {
 
 function Reset(): React.ReactElement {
   useBackground('drops') as void;
-  const { setExtensionLock } = useExtensionLockContext();
+
+  const dispatch = useAppDispatch();
 
   const navigate = useNavigate();
 
   const back = useCallback((): void => {
     updateStorage(STORAGE_KEY.IS_FORGOTTEN, { status: false })
       .finally(() => {
-        setExtensionLock(true);
+        dispatch(setIsExtensionLocked(true));
         navigate('/') as void;
         lockExtension().catch(console.error);
       })
       .catch(console.error);
-  }, [navigate, setExtensionLock]);
+  }, [navigate, dispatch]);
 
   return (
     <Container disableGutters sx={{ position: 'relative' }}>

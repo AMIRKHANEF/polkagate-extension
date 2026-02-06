@@ -3,13 +3,13 @@
 
 import React, { useEffect, useMemo, useState } from 'react';
 
-import { useExtensionLockContext } from '../context/ExtensionLockContext';
 import { useIsFlying, useLocalAccounts } from '../hooks';
 import useIsExtensionPopup from '../hooks/useIsExtensionPopup';
 import useIsForgotten from '../hooks/useIsForgotten';
 import { STEPS } from '../popup/passwordManagement/constants';
 import ForgotPassword from '../popup/passwordManagement/ForgotPassword';
 import Login from '../popup/passwordManagement/Login';
+import { useVariable } from '../store/hooks';
 import { ALLOWED_URL_ON_RESET_PASSWORD } from '../util/constants';
 import FlyingLogo from './FlyingLogo';
 
@@ -17,7 +17,7 @@ interface Props {
   children?: React.ReactNode;
 }
 
-export const updateStorage = async (label: string, newInfo: object) => {
+export const updateStorage = async(label: string, newInfo: object) => {
   try {
     // Retrieve the previous value
     const previousData = await getStorage(label) as object;
@@ -87,7 +87,7 @@ export const setStorage = (label: string, data: unknown, stringify = false) => {
 export default function Loading({ children }: Props): React.ReactElement<Props> {
   const isExtension = useIsExtensionPopup();
   const isFlying = useIsFlying();
-  const { isExtensionLocked } = useExtensionLockContext();
+  const isExtensionLocked = useVariable('extensionLock');
   const localAccounts = useLocalAccounts();
   const isForgotten = useIsForgotten();
 

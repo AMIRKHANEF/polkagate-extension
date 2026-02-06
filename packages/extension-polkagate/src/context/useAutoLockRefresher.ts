@@ -6,7 +6,7 @@ import { useEffect } from 'react';
 import { useAutoLockPeriod } from '@polkadot/extension-polkagate/src/hooks';
 import { setUnlockExpiry } from '@polkadot/extension-polkagate/src/messaging';
 
-function throttle<F extends (...args: unknown[]) => void>(func: F, limit: number) {
+function throttle<F extends(...args: unknown[]) => void>(func: F, limit: number) {
   let inThrottle = false;
 
   return (...args: Parameters<F>) => {
