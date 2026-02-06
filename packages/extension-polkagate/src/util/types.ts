@@ -743,10 +743,6 @@ export interface PricesContextType {
 }
 
 export type MyIconTheme = BaseIconTheme | 'polkasoul';
-export interface AccountIconThemeContextType {
-  accountIconTheme: MyIconTheme | undefined;
-  setAccountIconTheme: (theme: MyIconTheme) => void;
-}
 
 export interface FetchingRequests {
   fetching: Fetching;

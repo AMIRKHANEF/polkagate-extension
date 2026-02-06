@@ -9,12 +9,13 @@ import { Loading } from '@polkadot/extension-polkagate/src/components';
 import { store } from '@polkadot/extension-polkagate/src/store';
 
 import AccountAssetsBridge from './bridges/AccountAssetsBridge';
+import AccountIconThemeBridge from './bridges/AccountIconThemeBridge';
 import ExtensionLockBridge from './bridges/ExtensionLockBridge';
 import SettingsBridge from './bridges/SettingsBridge';
 import PricesProvider from './contexts/PricesProvider';
 import SelectedProvider from './contexts/SelectedProvider';
 import AppRoutes from './routes/RouteDefinitions';
-import { AccountIconThemeProvider, AccountProvider, ActionProvider, AlertProvider, ApiProvider, CurrencyProvider, FetchingProvider, GenesisHashOptionsProvider, MediaProvider, ReferendaProvider, RequestsProvider, UserAddedChainsProvider, WorkerProvider } from './contexts';
+import { AccountProvider, ActionProvider, AlertProvider, ApiProvider, CurrencyProvider, FetchingProvider, GenesisHashOptionsProvider, MediaProvider, ReferendaProvider, RequestsProvider, UserAddedChainsProvider, WorkerProvider } from './contexts';
 
 export default function Popup(): React.ReactElement {
   return (
@@ -23,38 +24,37 @@ export default function Popup(): React.ReactElement {
         <ExtensionLockBridge />
         <ActionProvider>
           <SettingsBridge />
-            <AccountIconThemeProvider>
-              <GenesisHashOptionsProvider>
-                <WorkerProvider>
-                  <AccountProvider>
-                    <ApiProvider>
-                      <AlertProvider>
-                        <FetchingProvider>
-                          <CurrencyProvider>
-                            <PricesProvider>
-                              <ReferendaProvider>
-                                <RequestsProvider>
-                                  <MediaProvider>
-                                    <UserAddedChainsProvider>
-                                      <SelectedProvider>
-                                        <AccountAssetsBridge />
-                                        <Loading>
-                                          <AppRoutes />
-                                        </Loading>
-                                      </SelectedProvider>
-                                    </UserAddedChainsProvider>
-                                  </MediaProvider>
-                                </RequestsProvider>
-                              </ReferendaProvider>
-                            </PricesProvider>
-                          </CurrencyProvider>
-                        </FetchingProvider>
-                      </AlertProvider>
-                    </ApiProvider>
-                  </AccountProvider>
-                </WorkerProvider>
-              </GenesisHashOptionsProvider>
-            </AccountIconThemeProvider>
+          <AccountIconThemeBridge />
+          <GenesisHashOptionsProvider>
+            <WorkerProvider>
+              <AccountProvider>
+                <ApiProvider>
+                  <AlertProvider>
+                    <FetchingProvider>
+                      <CurrencyProvider>
+                        <PricesProvider>
+                          <ReferendaProvider>
+                            <RequestsProvider>
+                              <MediaProvider>
+                                <UserAddedChainsProvider>
+                                  <SelectedProvider>
+                                    <AccountAssetsBridge />
+                                    <Loading>
+                                      <AppRoutes />
+                                    </Loading>
+                                  </SelectedProvider>
+                                </UserAddedChainsProvider>
+                              </MediaProvider>
+                            </RequestsProvider>
+                          </ReferendaProvider>
+                        </PricesProvider>
+                      </CurrencyProvider>
+                    </FetchingProvider>
+                  </AlertProvider>
+                </ApiProvider>
+              </AccountProvider>
+            </WorkerProvider>
+          </GenesisHashOptionsProvider>
         </ActionProvider>
       </Provider>
     </AnimatePresence>

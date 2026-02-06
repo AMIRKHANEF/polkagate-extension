@@ -3,12 +3,12 @@
 
 import type { IconTheme as BaseIconTheme } from '@polkadot/react-identicon/types';
 
-import React, { useCallback, useContext } from 'react';
+import React, { useCallback } from 'react';
 
 import Icon from '@polkadot/react-identicon';
 
-import { AccountIconThemeContext } from '../components';
 import { useAlerts, useTranslation } from '../hooks';
+import { useVariable } from '../store/hooks';
 import PolkaSoul from './PolkaSoul';
 
 type IconTheme = BaseIconTheme | 'polkasoul';
@@ -26,7 +26,7 @@ interface Props {
 }
 
 function PolkaGateIdenticon({ address, iconTheme, onCopy, prefix, size, style = {}, withNotify = true }: Props) {
-  const { accountIconTheme } = useContext(AccountIconThemeContext);
+  const accountIconTheme = useVariable('accountIconTheme');
   const { t } = useTranslation();
   const { notify } = useAlerts();
 

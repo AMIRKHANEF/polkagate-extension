@@ -3,6 +3,7 @@
 
 import { configureStore } from '@reduxjs/toolkit';
 
+import accountItemThemeReducer from './slices/AccountIconThemeSlice';
 import assetsReducer from './slices/assetsSlice';
 import extensionLockReducer from './slices/extensionLockSlice';
 import settingsReducer from './slices/settingsSlice';
@@ -13,6 +14,7 @@ export const store = configureStore({
             serializableCheck: false // important for Polkadot objects
         }),
     reducer: {
+        accountIconTheme: accountItemThemeReducer,
         assets: assetsReducer,
         extensionLock: extensionLockReducer,
         settings: settingsReducer
