@@ -11,9 +11,14 @@ export const useAppSelector: TypedUseSelectorHook<RootState> = useSelector;
 
 export const selectors = {
     accountsAssets: (state: RootState) =>
-        state.assets.accountsAssets
-};
+        state.assets.accountsAssets,
 
-export function useVariable(key: keyof typeof selectors) {
-  return useSelector(selectors[key]);
+    extensionLock: (state: RootState) =>
+        state.extensionLock.isExtensionLocked
+} as const;
+
+export function useVariable<K extends keyof typeof selectors>(
+  key: K
+): ReturnType<typeof selectors[K]> {
+  return useSelector(selectors[key] as (state: RootState) => ReturnType<typeof selectors[K]>);
 }

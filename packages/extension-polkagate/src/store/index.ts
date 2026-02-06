@@ -4,6 +4,7 @@
 import { configureStore } from '@reduxjs/toolkit';
 
 import assetsReducer from './slices/assetsSlice';
+import extensionLockReducer from './slices/extensionLockSlice';
 
 export const store = configureStore({
     middleware: (getDefaultMiddleware) =>
@@ -11,7 +12,8 @@ export const store = configureStore({
             serializableCheck: false // important for Polkadot objects
         }),
     reducer: {
-        assets: assetsReducer
+        assets: assetsReducer,
+        extensionLock: extensionLockReducer
     }
 });
 
