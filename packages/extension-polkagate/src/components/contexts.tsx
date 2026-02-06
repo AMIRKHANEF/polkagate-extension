@@ -2,12 +2,10 @@
 // SPDX-License-Identifier: Apache-2.0
 
 import type { AccountsContext, AuthorizeRequest, MetadataRequest, SigningRequest } from '@polkadot/extension-base/background/types';
-import type { SettingsStruct } from '@polkadot/ui-settings/types';
 import type { AccountIconThemeContextType, AlertContextType, APIsContext, CurrencyContextType, DropdownOption, FetchingRequests, PricesContextType, ReferendaContextType, SelectedContextType, UserAddedChains } from '../util/types';
 
 import React from 'react';
 
-import settings from '@polkadot/ui-settings';
 import { noop } from '@polkadot/util';
 
 const AccountContext = React.createContext<AccountsContext>({ accounts: [], hierarchy: [], master: undefined });
@@ -22,7 +20,6 @@ const FetchingContext = React.createContext<FetchingRequests>({ fetching: {}, se
 const ReferendaContext = React.createContext<ReferendaContextType>({ refs: {}, setRefs: noop });
 const MediaContext = React.createContext<boolean>(false);
 const MetadataReqContext = React.createContext<MetadataRequest[]>([]);
-const SettingsContext = React.createContext<SettingsStruct>(settings.get());
 const SigningReqContext = React.createContext<SigningRequest[]>([]);
 const ToastContext = React.createContext<({ show: (message: string) => void })>({ show: noop });
 const UserAddedChainContext = React.createContext<UserAddedChains>({});
@@ -44,7 +41,6 @@ export { AccountContext,
   PricesContext,
   ReferendaContext,
   SelectedContext,
-  SettingsContext,
   SigningReqContext,
   ToastContext,
   UserAddedChainContext,

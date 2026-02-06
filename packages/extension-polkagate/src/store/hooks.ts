@@ -14,7 +14,10 @@ export const selectors = {
         state.assets.accountsAssets,
 
     extensionLock: (state: RootState) =>
-        state.extensionLock.isExtensionLocked
+        state.extensionLock.isExtensionLocked,
+
+    settings: (state: RootState) =>
+        state.settings.settings
 } as const;
 
 export function useVariable<K extends keyof typeof selectors>(

@@ -5,6 +5,7 @@ import { configureStore } from '@reduxjs/toolkit';
 
 import assetsReducer from './slices/assetsSlice';
 import extensionLockReducer from './slices/extensionLockSlice';
+import settingsReducer from './slices/settingsSlice';
 
 export const store = configureStore({
     middleware: (getDefaultMiddleware) =>
@@ -13,7 +14,8 @@ export const store = configureStore({
         }),
     reducer: {
         assets: assetsReducer,
-        extensionLock: extensionLockReducer
+        extensionLock: extensionLockReducer,
+        settings: settingsReducer
     }
 });
 

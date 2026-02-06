@@ -12,6 +12,5 @@ export { default as GenesisHashOptionsProvider } from './GenesisHashOptionsProvi
 export { default as MediaProvider } from './MediaProvider';
 export { default as ReferendaProvider } from './ReferendaProvider';
 export { default as RequestsProvider } from './RequestsProvider';
-export { default as SettingsProvider } from './SettingsProvider';
 export { default as UserAddedChainsProvider } from './UserAddedChainsProvider';
 export { default as WorkerProvider } from './WorkerProvider';

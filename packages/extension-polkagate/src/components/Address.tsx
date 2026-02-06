@@ -16,9 +16,10 @@ import { decodeAddress, encodeAddress } from '@polkadot/util-crypto';
 
 import { useAccountName, useIsDark, useTranslation } from '../hooks';
 import useMetadata from '../hooks/useMetadata';
+import { useVariable } from '../store/hooks';
 import PolkaGateIdenticon from '../style/PolkaGateIdenticon';
 import { DEFAULT_TYPE } from '../util/defaultType';
-import { AccountContext, ActionButton, GlowCheckbox, SettingsContext, ShortAddress } from './';
+import { AccountContext, ActionButton, GlowCheckbox, ShortAddress } from './';
 
 export interface Props {
   actions?: React.ReactNode;
@@ -95,7 +96,7 @@ function Address({ address, backgroundColor, check, genesisHash, handleCheck, ma
 
   const { accounts } = useContext(AccountContext);
   const accountName = useAccountName(address || '');
-  const settings = useContext(SettingsContext);
+  const settings = useVariable('settings');
   const [{ formatted, genesisHash: recodedGenesis }, setRecoded] = useState<Recoded>(defaultRecoded);
   const chain = useMetadata(genesisHash || recodedGenesis, true);
 

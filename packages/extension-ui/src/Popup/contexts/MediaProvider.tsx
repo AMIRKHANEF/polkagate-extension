@@ -1,9 +1,10 @@
 // Copyright 2019-2026 @polkadot/extension-polkagate authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
-import React, { useContext, useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 
-import { MediaContext, SettingsContext } from '@polkadot/extension-polkagate/src/components/contexts';
+import { MediaContext } from '@polkadot/extension-polkagate/src/components/contexts';
+import { useVariable } from '@polkadot/extension-polkagate/src/store/hooks';
 
 interface MediaProviderProps {
   children: React.ReactNode;
@@ -27,7 +28,7 @@ async function requestMediaAccess(cameraOn: boolean): Promise<boolean> {
 }
 
 export default function MediaProvider({ children }: MediaProviderProps) {
-  const settings = useContext(SettingsContext);
+  const settings = useVariable('settings');
   const [cameraOn, setCameraOn] = useState(settings.camera === 'on');
   const [mediaAllowed, setMediaAllowed] = useState(false);
 

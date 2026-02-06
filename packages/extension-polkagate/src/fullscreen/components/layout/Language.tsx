@@ -4,19 +4,19 @@
 import { ChevronRight } from '@mui/icons-material';
 import { Stack, Typography } from '@mui/material';
 import { Translate } from 'iconsax-react';
-import React, { useCallback, useContext, useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 
+import { useVariable } from '@polkadot/extension-polkagate/src/store/hooks';
 import { getLanguageOptions } from '@polkadot/extension-polkagate/src/util/getLanguageOptions';
 import { useExtensionPopups } from '@polkadot/extension-polkagate/src/util/handleExtensionPopup';
 import uiSetting from '@polkadot/ui-settings';
 
-import { SettingsContext } from '../../../components/contexts';
 import useIsDark from '../../../hooks/useIsDark';
 import SelectLanguage from '../../../partials/SelectLanguage';
 import { ExtensionPopups } from '../../../util/constants';
 
 export default function Language(): React.ReactElement {
-  const settings = useContext(SettingsContext);
+  const settings = useVariable('settings');
   const isDark = useIsDark();
   const { extensionPopup, extensionPopupCloser, extensionPopupOpener } = useExtensionPopups();
 
@@ -50,7 +50,7 @@ export default function Language(): React.ReactElement {
         onClick={extensionPopupOpener(ExtensionPopups.LANGUAGE)}
         onMouseEnter={toggleHover}
         onMouseLeave={toggleHover}
-        sx={{ alignItems: 'center', bgcolor: hovered ? '#2D1E4A' : 'transparent', border: '1px solid #1B133C', borderRadius: '12px', cursor: 'pointer', height: '36px', width: '100%', px: '10px' }}
+        sx={{ alignItems: 'center', bgcolor: hovered ? '#2D1E4A' : 'transparent', border: '1px solid #1B133C', borderRadius: '12px', cursor: 'pointer', height: '36px', px: '10px', width: '100%' }}
       >
         <Stack alignItems='center' columnGap='8px' direction='row' sx={{ alignItems: 'center' }}>
           <Translate color={isDark ? '#AA83DC' : '#745D8B'} size='14' variant='Bulk' />

@@ -10,10 +10,11 @@ import { store } from '@polkadot/extension-polkagate/src/store';
 
 import AccountAssetsBridge from './bridges/AccountAssetsBridge';
 import ExtensionLockBridge from './bridges/ExtensionLockBridge';
+import SettingsBridge from './bridges/SettingsBridge';
 import PricesProvider from './contexts/PricesProvider';
 import SelectedProvider from './contexts/SelectedProvider';
 import AppRoutes from './routes/RouteDefinitions';
-import { AccountIconThemeProvider, AccountProvider, ActionProvider, AlertProvider, ApiProvider, CurrencyProvider, FetchingProvider, GenesisHashOptionsProvider, MediaProvider, ReferendaProvider, RequestsProvider, SettingsProvider, UserAddedChainsProvider, WorkerProvider } from './contexts';
+import { AccountIconThemeProvider, AccountProvider, ActionProvider, AlertProvider, ApiProvider, CurrencyProvider, FetchingProvider, GenesisHashOptionsProvider, MediaProvider, ReferendaProvider, RequestsProvider, UserAddedChainsProvider, WorkerProvider } from './contexts';
 
 export default function Popup(): React.ReactElement {
   return (
@@ -21,7 +22,7 @@ export default function Popup(): React.ReactElement {
       <Provider store={store}>
         <ExtensionLockBridge />
         <ActionProvider>
-          <SettingsProvider>
+          <SettingsBridge />
             <AccountIconThemeProvider>
               <GenesisHashOptionsProvider>
                 <WorkerProvider>
@@ -54,7 +55,6 @@ export default function Popup(): React.ReactElement {
                 </WorkerProvider>
               </GenesisHashOptionsProvider>
             </AccountIconThemeProvider>
-          </SettingsProvider>
         </ActionProvider>
       </Provider>
     </AnimatePresence>
