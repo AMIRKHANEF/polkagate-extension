@@ -10,17 +10,13 @@ export const useAppDispatch = () => useDispatch<AppDispatch>();
 export const useAppSelector: TypedUseSelectorHook<RootState> = useSelector;
 
 export const selectors = {
-  accountIconTheme: (state: RootState) =>
-    state.accountIconTheme.accountIconTheme,
+  accountIconTheme: (state: RootState) => state.accountIconTheme,
 
-  accountsAssets: (state: RootState) =>
-    state.assets.accountsAssets,
+  accountsAssets: (state: RootState) => state.assets.accountsAssets,
 
-  extensionLock: (state: RootState) =>
-    state.extensionLock.isExtensionLocked,
+  extensionLock: (state: RootState) => state.extensionLock,
 
-  settings: (state: RootState) =>
-    state.settings.settings
+  settings: (state: RootState) => state.settings
 } as const;
 
 export function useVariable<K extends keyof typeof selectors>(key: K): ReturnType<typeof selectors[K]> {

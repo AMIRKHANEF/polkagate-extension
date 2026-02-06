@@ -7,20 +7,16 @@ import { createSlice, type PayloadAction } from '@reduxjs/toolkit';
 
 import { DEFAULT_ACCOUNT_ICON_THEME } from '@polkadot/extension-polkagate/src/util/constants';
 
-export interface accountIconThemeState {
-    accountIconTheme: MyIconTheme;
-}
+export type accountIconThemeState = MyIconTheme;
 
-const initialState: accountIconThemeState = {
-    accountIconTheme: DEFAULT_ACCOUNT_ICON_THEME
-};
+const initialState: accountIconThemeState = DEFAULT_ACCOUNT_ICON_THEME as MyIconTheme;
 
 const accountIconThemeSlice = createSlice({
     initialState,
     name: 'accountIconTheme',
     reducers: {
-        setAccountIconTheme(state, action: PayloadAction<MyIconTheme>) {
-            state.accountIconTheme = action.payload;
+        setAccountIconTheme(_state, action: PayloadAction<MyIconTheme>) {
+            return action.payload;
         }
     }
 });

@@ -7,20 +7,16 @@ import { createSlice, type PayloadAction } from '@reduxjs/toolkit';
 
 import uiSettings from '@polkadot/ui-settings';
 
-export interface SettingsState {
-    settings: SettingsStruct;
-}
+export type SettingsState = SettingsStruct;
 
-const initialState: SettingsState = {
-    settings: uiSettings.get()
-};
+const initialState: SettingsState = uiSettings.get();
 
 const settingsSlice = createSlice({
     initialState,
     name: 'settings',
     reducers: {
-        setSettings(state, action: PayloadAction<SettingsStruct>) {
-            state.settings = action.payload;
+        setSettings(_state, action: PayloadAction<SettingsStruct>) {
+            return action.payload;
         }
     }
 });

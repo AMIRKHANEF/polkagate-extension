@@ -3,20 +3,16 @@
 
 import { createSlice, type PayloadAction } from '@reduxjs/toolkit';
 
-export interface ExtensionLockState {
-    isExtensionLocked: boolean;
-}
+export type ExtensionLockState = boolean;
 
-const initialState: ExtensionLockState = {
-    isExtensionLocked: true
-};
+const initialState: ExtensionLockState = true;
 
 const extensionLockSlice = createSlice({
     initialState,
     name: 'extensionLock',
     reducers: {
-        setIsExtensionLocked(state, action: PayloadAction<boolean>) {
-            state.isExtensionLocked = action.payload;
+        setIsExtensionLocked(_state, action: PayloadAction<boolean>) {
+            return action.payload;
         }
     }
 });
